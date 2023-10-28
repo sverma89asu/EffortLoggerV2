@@ -1,5 +1,7 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -7,31 +9,24 @@ import java.util.Scanner;
 public class LogOfLogs {
 
 	public static void main(String[] args) throws ParseException {
-		SimpleDateFormat SDFormat = new SimpleDateFormat("yyyy/MM/dd");
-		Calendar cal = Calendar.getInstance();
-		Date date1 = null, date2 = null;
-		boolean isValid = true;
-//		System.out.println("The original Date: " + cal.getTime());
-//		String curr_date = SDFormat.format(cal.getTime());
-//    	System.out.println("Formatted Date: " + curr_date);
+		// Date date1 = null, date2 = null;
  
 		String time1 = "00:00:00";
 		String time2 = "00:00:00";
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-		date1 = format.parse(time1);
-		date2 = format.parse(time2);
+		//SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+//		date1 = format.parse(time1);
+//		date2 = format.parse(time2); Dont think i need these yet
 		// https://stackoverflow.com/questions/4927856/how-can-i-calculate-a-time-difference-in-java
-//		long difference = date2.getTime() - date1.getTime(); 
-//		long diffMinutes = difference / 60000;
-		//System.out.println(diffMinutes);
-		
-		LogType newLog = new LogType();
-		newLog.setLogNumber(1);
-		Scanner scan = new Scanner(System.in);
-		String answer = "";
-		LogType oldLog = new LogType(newLog);
-		oldLog.setLogNumber(1);
-		int line = -1;
+
+		/* Create a new log using variables:
+			int logNumber, String date, String startTime, String endTime, 
+			String lifeCycleStep, String effortCategory, String deliverable)
+		*/ 
+		// oldLog is our original log we will edit
+		LogType oldLog = new LogType(1, "2023/10/28", "08:30:00", "08:45:00", "Producable Cycle", "100%", "Sunday");
+		LogType newLog = new LogType(oldLog); // newLog to show the edited version 
+				
+		// Output options they can use
 		System.out.println("Which change would you like to make?\nEnter the number:");
 		System.out.print("0. Quit\n"
 				+ "1. Date\n"
@@ -42,25 +37,28 @@ public class LogOfLogs {
 				+ "6. Deliverable\n"
 				+ "7. Print Options again\n");
 		
+		
+		boolean isValid = true; // check if the option given is valid (0-7)
+		int line = -1; // begin line at -1 so it doesn't go to any switch statement
+		Scanner scan = new Scanner(System.in);
+		String answer = "";
 		do {
 			try {
-				//System.out.println(newLog.toString());
 				isValid = true;
-				line = scan.nextInt();
-				scan.nextLine();
+				line = scan.nextInt(); 
+				scan.nextLine(); // Get option from user
 			}
-			catch(Exception e) {
-				System.out.println("Invalid");
-				scan.nextLine();
+			// Catch any options that aren't 0-7 
+			catch(Exception e) { 
+				scan.nextLine(); // Flush out scanner
 				line = -1;
 				isValid = false;
 			}
 				switch (line) {
 					
-				case 1:
+				case 1: // https://stackoverflow.com/questions/18873014/parse-string-date-in-yyyy-mm-dd-format
 					System.out.println("What do you want to change date to?\nPlease Use yyyy-MM-dd format: \n");
 					answer = scan.nextLine();
-					// https://stackoverflow.com/questions/18873014/parse-string-date-in-yyyy-mm-dd-format
 					SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-DD");
 					Date convertedCurrentDate = date.parse(answer);
 					String newDate = date.format(convertedCurrentDate);
@@ -74,7 +72,6 @@ public class LogOfLogs {
 					String newTime = time.format(convertedCurrentTime);
 					newLog.setStartTime(newTime);
 					time1 = newTime;
-					//date1 = format.parse(time1);
 					newLog.setDeltaTime(time1, time2);
 					break;
 				case 3:
@@ -85,7 +82,6 @@ public class LogOfLogs {
 					newTime = time.format(convertedCurrentTime);
 					newLog.setEndTime(newTime);
 					time2 = newTime;
-					//date2 = format.parse(time2);
 					newLog.setDeltaTime(time1, time2);
 					break;
 				case 4:
@@ -132,13 +128,3 @@ public class LogOfLogs {
 		
 	}
 }
-
-
-/*
-this.logNumber = logNumber;
-this.date = date;
-this.startTime = startTime;
-this.endTime = endTime;
-this.lifeCycleStep = lifeCycleStep;
-this.effortCategory = effortCategory;
-this.deliverable = deliverable;*/
