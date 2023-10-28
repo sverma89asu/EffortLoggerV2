@@ -42,6 +42,7 @@ public class LogType {
 		this.lifeCycleStep = c.lifeCycleStep;
 		this.effortCategory = c.effortCategory;
 		this.deliverable = c.deliverable;
+		this.deltaTime = (this.getDeltaTime(startTime, endTime));
 	}
 	
 	public int getLogNumbeR() {
