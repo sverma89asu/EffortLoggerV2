@@ -7,17 +7,16 @@ public class LogType {
 	private String date;
 	private String startTime;
 	private String endTime;
-	private int deltaTime;
+	private int deltaTime = 0;
 	private String lifeCycleStep;
 	private String effortCategory;
 	private String deliverable;
 	
-	public LogType(int logNumber, String date, String startTime, String endTime, int deltaTime, String lifeCycleStep, String effortCategory, String deliverable) {
+	public LogType(int logNumber, String date, String startTime, String endTime, String lifeCycleStep, String effortCategory, String deliverable) {
 		this.logNumber = logNumber;
 		this.date = date;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.deltaTime = deltaTime;
 		this.lifeCycleStep = lifeCycleStep;
 		this.effortCategory = effortCategory;
 		this.deliverable = deliverable;
@@ -39,13 +38,12 @@ public class LogType {
 		this.date = c.date;
 		this.startTime = c.startTime;
 		this.endTime = c.endTime;
-		this.deltaTime = c.deltaTime;
 		this.lifeCycleStep = c.lifeCycleStep;
 		this.effortCategory = c.effortCategory;
 		this.deliverable = c.deliverable;
 	}
 	
-	public int getLogNumber() {
+	public int getLogNumbeR() {
 		return logNumber;
 	}
 	
@@ -96,9 +94,9 @@ public class LogType {
 		this.endTime = newTime;
 	}
 	
-	public void setDeltaTime(String date1, String date2) {
-		System.out.println(date1 + " " + date2);
-		long minutes = Duration.between(LocalTime.parse(date2), LocalTime.parse(date1)).toMinutes();
+	public void setDeltaTime(String time1, String time2) {
+		System.out.println(time1 + " " + time2);
+		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		System.out.println(minutes);
 		this.deltaTime = (int)(-minutes);
 	}
@@ -130,15 +128,3 @@ public class LogType {
 	
 	
 }
-
-/*
-number
-date
-start
-stop
-delta time
-life cycle step
-effort category
-Deliverable / Interruption / etc.
-
-*/
