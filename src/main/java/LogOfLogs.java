@@ -72,7 +72,7 @@ public class LogOfLogs {
 					String newTime = time.format(convertedCurrentTime);
 					newLog.setStartTime(newTime);
 					time1 = newTime;
-					newLog.setDeltaTime(time1, time2);
+					newLog.setDeltaTime(time1, newLog.getEndTime());
 					break;
 				case 3:
 					System.out.println("What do you want to change Stop Time to?\nPlease use hh:mm:ss format: \n");
@@ -82,7 +82,7 @@ public class LogOfLogs {
 					newTime = time.format(convertedCurrentTime);
 					newLog.setEndTime(newTime);
 					time2 = newTime;
-					newLog.setDeltaTime(time1, time2);
+					newLog.setDeltaTime(newLog.getStartTime(), time2);
 					break;
 				case 4:
 					System.out.println("What do you want to change Life Cycle Step to?\n");
@@ -128,3 +128,13 @@ public class LogOfLogs {
 		
 	}
 }
+
+
+/*
+this.logNumber = logNumber;
+this.date = date;
+this.startTime = startTime;
+this.endTime = endTime;
+this.lifeCycleStep = lifeCycleStep;
+this.effortCategory = effortCategory;
+this.deliverable = deliverable;*/
