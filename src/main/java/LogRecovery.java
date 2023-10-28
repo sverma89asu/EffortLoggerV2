@@ -28,10 +28,10 @@ public class LogRecovery {
             conn.disconnect();
 
             // (Working on it):
-            // Convert the retrieved JSON data to a LogType object
-            // Parse the JSON response and set the values to a new LogType object
+            // Convert the retrieved JSON data to a src.main.java.LogType object
+            // Parse the JSON response and set the values to a new src.main.java.LogType object
             // Example:
-            // LogType retrievedLog = parseAndCreateLogType(response.toString());
+            // src.main.java.LogType retrievedLog = parseAndCreateLogType(response.toString());
             // return retrievedLog;
             // Need to implement the parseAndCreateLogType method to parse the JSON response
 
