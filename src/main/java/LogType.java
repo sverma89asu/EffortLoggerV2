@@ -7,7 +7,7 @@ public class LogType {
 	private String date;
 	private String startTime;
 	private String endTime;
-	private int deltaTime = 0;
+	private int deltaTime;
 	private String lifeCycleStep;
 	private String effortCategory;
 	private String deliverable;
@@ -20,6 +20,7 @@ public class LogType {
 		this.lifeCycleStep = lifeCycleStep;
 		this.effortCategory = effortCategory;
 		this.deliverable = deliverable;
+		this.deltaTime = (this.getDeltaTime(startTime, endTime));
 	}
 	
 	public LogType() {
@@ -59,8 +60,9 @@ public class LogType {
 		return endTime;
 	}
 	
-	public int getDeltaTime(Date date1, Date date2) {
-		return deltaTime;
+	public int getDeltaTime(String time1, String time2) {
+		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
+		return (int)minutes;
 	}
 	
 	public String getLifeCycleStep() {
@@ -95,10 +97,11 @@ public class LogType {
 	}
 	
 	public void setDeltaTime(String time1, String time2) {
+		System.out.println("time1 is: " + time1 + "\nTime 2 is: " + time2);
 		System.out.println(time1 + " " + time2);
 		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		System.out.println(minutes);
-		this.deltaTime = (int)(-minutes);
+		this.deltaTime = (int)(minutes);
 	}
 	
 	public void setLifeCycleStep(String lifeCycleStep) {
@@ -124,7 +127,4 @@ public class LogType {
 				+ effortCategory + "\nDeliverable: "
 				+ deliverable + "\n";
 	}
-	
-	
-	
 }
