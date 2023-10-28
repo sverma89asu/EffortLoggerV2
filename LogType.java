@@ -45,7 +45,7 @@ public class LogType {
 		this.deliverable = c.deliverable;
 	}
 	
-	public int getLogNumbeR() {
+	public int getLogNumber() {
 		return logNumber;
 	}
 	
