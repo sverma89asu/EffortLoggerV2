@@ -6,6 +6,7 @@ tu14\api\request\GetRequest.class
 tu14\LogRecovery.class
 tu14\api\Backend.class
 tu14\api\request\CreateRequest.class
+tu14\controllers\HomeController.class
 tu14\api\exceptions\APITransformException.class
 tu14\api\request\APIRequest.class
 tu14\api\request\DeleteRequest.class
