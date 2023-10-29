@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="EffortLoggerV2" target="17" />
+      <module name="EffortLoggerV2" target="1.5" />
       <module name="RiskReduction-Prototype" target="17" />
     </bytecodeTargetLevel>
   </component>

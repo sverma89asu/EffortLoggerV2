@@ -6,10 +6,16 @@ api\IRawImplementer.class
 api\RawData.class
 api\Backend.class
 api\exceptions\InvalidDatatypeException.class
+MyAccountController.class
 Main.class
 api\IAuthenticationService.class
 api\PlaintextBearerAuthentication.class
-User.class
+RawUserData.class
+ChangePasswordController.class
+LogType.class
+api\tables\Tables.class
+UserData.class
 api\exceptions\APITransformException.class
 api\request\CreateRequest.class
+LoginController.class
 api\request\DeleteRequest.class
