@@ -19,12 +19,14 @@ public class BackendTest {
 
     boolean failed = true;
 
+    static int id = 14;
+
     @Test
     void TestComplete() throws ExecutionException, InterruptedException, APITransformException {
 
         Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
 
-        User us = new User("test1", "pwd");
+        User us = new User("test3", "pwd");
 
         List<User> users = backend.send(new GetRequest().table("user"), User.class).get().get().cast();
 
@@ -35,7 +37,7 @@ public class BackendTest {
         int count = users.size();
         System.out.println(count);
 
-        backend.send(new CreateRequest().table("user").id(10).body(us), User.class).get();
+        backend.send(new CreateRequest().table("user").id(id).body(us), User.class).get();
 
         users = backend.send(new GetRequest().table("user"), User.class).get().get().cast();
 
@@ -47,7 +49,7 @@ public class BackendTest {
 
         us.setPassword("H");
 
-        backend.send(new UpdateRequest().table("user").id(10).body(us), User.class).get();
+        backend.send(new UpdateRequest().table("user").id(id).body(us), User.class).get();
 
         users = backend.send(new GetRequest().table("user"), User.class).get().get().cast();
 
@@ -57,7 +59,7 @@ public class BackendTest {
 
         assertEquals("H", users.get(count).password);
 
-        backend.send(new DeleteRequest().table("user").id(10), User.class).get();
+        backend.send(new DeleteRequest().table("user").id(id), User.class).get();
 
         users = backend.send(new GetRequest().table("user"), User.class).get().get().cast();
 
@@ -74,7 +76,7 @@ public class BackendTest {
     void tearDown() {
         if (failed) {
             Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
-            backend.send(new DeleteRequest().table("user").id(10), User.class);
+            backend.send(new DeleteRequest().table("user").id(id), User.class);
         }
     }
 

@@ -7,20 +7,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class Backend {
 
-    private IAuthenticationService auth;
+    private final IAuthenticationService auth;
     private HttpRequest.Builder requestBuilder;
-    private HttpClient httpClient;
+    private final HttpClient httpClient;
 
-    private final String BASE_URL = "https://cse360.flerp.dev";
+    private static final String BASE_URL = "https://cse360.flerp.dev";
 
     public Backend(IAuthenticationService authenticationService) {
         auth = authenticationService;
@@ -36,10 +36,10 @@ public class Backend {
         System.out.print(" ");
         System.out.println(request.headers().toString());
 
-        return httpClient.sendAsync(request, new RawBodyHandler<K>(kClass));
+        return httpClient.sendAsync(request, new RawBodyHandler<>(kClass));
     }
 
-    public <K extends IRawImplementer<K>> CompletableFuture<Optional<RawData<K>>> send(APIRequest request, Class<K> kClass) {
+    public <K extends IRawImplementer<K>> CompletableFuture<RawData<K>> send(APIRequest request, Class<K> kClass) {
         requestBuilder = HttpRequest.newBuilder();
 
         request.includeRequestDataLayer(requestBuilder);
@@ -54,15 +54,18 @@ public class Backend {
         // TODO make send return a union type that indicates type of error on non-successful completion
         return response.thenApplyAsync((resp) -> switch (resp.statusCode()) {
             case 200 -> resp.body();
-            default -> null;
-        }).thenApplyAsync((data) -> Optional.ofNullable(data));
+            default -> {
+                String error = resp.headers().firstValue("x-error-message").orElse("Internal Server Error");
+                yield new RawData<>(URLDecoder.decode(error, StandardCharsets.UTF_8), resp.statusCode());
+            }
+        });
     }
 }
 
 class RawBodyHandler<T extends IRawImplementer<T>> implements  HttpResponse.BodyHandler<RawData<T>> {
 
     private final Class<T> tClass;
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     RawBodyHandler(Class<T> tClass) {
         this.tClass = tClass;
@@ -74,7 +77,7 @@ class RawBodyHandler<T extends IRawImplementer<T>> implements  HttpResponse.Body
 
         return HttpResponse.BodySubscribers.mapping(upstream, (String body) -> {
             try {
-                return new RawData<>(mapper.readTree(body), tClass);
+                return new RawData<>(responseInfo.statusCode(), mapper.readTree(body), tClass);
             } catch (IOException e) {
                 return null;
             }

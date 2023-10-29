@@ -9,8 +9,6 @@ public class CreateRequest extends APIRequest {
             throw new IllegalStateException("No request body");
         }
 
-        System.out.println(body);
-
         if (id != -1)
             request.header("X-Data-ID", String.valueOf(id));
 
