@@ -1,8 +1,12 @@
 import api.IRawImplementer;
 import api.exceptions.APITransformException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class User implements IRawImplementer<User> {
+
+    @JsonIgnore
+    protected long id;
 
     protected String username;
 
@@ -29,6 +33,7 @@ public class User implements IRawImplementer<User> {
     @Override
     public User construct(JsonNode data) throws APITransformException {
         try {
+            this.id = data.get("id").asLong();
             this.username = data.get("username").asText();
             this.password = data.get("password").asText();
         } catch (RuntimeException e) {
