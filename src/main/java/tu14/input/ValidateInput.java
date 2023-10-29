@@ -17,11 +17,7 @@ public class ValidateInput {
 
             // Check if inputted date is in the future
             Date presentDate = new Date();
-            if (date.after(presentDate)) {
-                return false;
-            }
-
-            return true;
+            return !date.after(presentDate);
         } catch (ParseException e) {
             return false;
         }
@@ -39,35 +35,22 @@ public class ValidateInput {
 
             // Check if inputted time is in the future
             Date presentTime = new Date();
-            if (time.after(presentTime)) {
-                return false;
-            }
-
-            return true;
+            return !time.after(presentTime);
         } catch (ParseException e) {
             return false;
         }
     }
 
     public static boolean lifeCycleValidate(String userInput) {
-        if (userInput.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !userInput.isEmpty();
     }
 
     public static boolean effortCategoryValidate(String userInput) {
-        if (userInput.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !userInput.isEmpty();
     }
 
     public static boolean deliverableValidate(String userInput) {
-        if (userInput.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !userInput.isEmpty();
     }
 
 }

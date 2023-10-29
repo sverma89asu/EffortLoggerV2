@@ -66,9 +66,9 @@ public class LogType {
 		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		double seconds = (minutes % 60);
 		double newSeconds = seconds / 60;
-		double totalTime = (double)(newSeconds + minutes);
+		double totalTime = newSeconds + minutes;
 		totalTime = Math.floor(totalTime * 100) / 100;
-		return (double)totalTime;
+		return totalTime;
 	}
 	
 	public String getLifeCycleStep() {
@@ -101,7 +101,7 @@ public class LogType {
 	public void setEndTime(String newTime) {
 		this.endTime = newTime;
 	}
-	
+
 	public void setDeltaTime(String time1, String time2) {
 		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		double seconds = (minutes % 60);

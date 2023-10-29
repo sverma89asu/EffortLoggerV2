@@ -117,11 +117,7 @@ public class ChangePasswordController {
             }
             else{
                 try {
-                    //TODO centralized Backend() instances
-                    //NOTE: Christoph, maybe impl a factory/singleton thingy?
-                    Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
-
-                    RawData<?> data = backend.send(
+                    RawData<?> data = Backend.getInstance().send(
                             new UpdateRequest().table("user").id(MainApp.getUser().getId())
                                     .body(new RawUserData(MainApp.getUser(), newPassword)), null).get();
 

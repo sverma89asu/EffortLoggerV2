@@ -47,10 +47,7 @@ public class IndexController {
 
         progress_bar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
-        // TODO centralized Backend() instances
-        Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
-
-        backend.send(new GetRequest().table("user"), RawUserData.class).thenAccept((raw) -> {
+        Backend.getInstance().send(new GetRequest().table("user"), RawUserData.class).thenAccept((raw) -> {
             if (!raw.ok()) {
                 Platform.runLater(() -> {
                     System.err.println(raw.errorMessage);
