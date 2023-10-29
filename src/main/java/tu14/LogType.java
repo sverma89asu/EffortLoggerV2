@@ -1,7 +1,6 @@
-package tu14;
-
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Date;
 
 public class LogType {
 	private int logNumber;
@@ -36,9 +35,14 @@ public class LogType {
 	}
 	
 	public LogType(LogType c) {
-		this(c.logNumber, c.date, c.startTime, c.endTime, c.lifeCycleStep, c.effortCategory, c.deliverable);
-
-		this.deltaTime = c.deltaTime;
+		this.logNumber = c.logNumber;
+		this.date = c.date;
+		this.startTime = c.startTime;
+		this.endTime = c.endTime;
+		this.lifeCycleStep = c.lifeCycleStep;
+		this.effortCategory = c.effortCategory;
+		this.deliverable = c.deliverable;
+		this.deltaTime = (this.getDeltaTime(startTime, endTime));
 	}
 	
 	public int getLogNumber() {
@@ -61,9 +65,9 @@ public class LogType {
 		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		double seconds = (minutes % 60);
 		double newSeconds = seconds / 60;
-		double totalTime = newSeconds + minutes;
+		double totalTime = (double)(newSeconds + minutes);
 		totalTime = Math.floor(totalTime * 100) / 100;
-		return totalTime;
+		return (double)totalTime;
 	}
 	
 	public String getLifeCycleStep() {
@@ -101,9 +105,9 @@ public class LogType {
 		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		double seconds = (minutes % 60);
 		double newSeconds = seconds / 60;
-		double totalTime = newSeconds + minutes;
+		double totalTime = (double)(newSeconds + minutes);
 		totalTime = Math.floor(totalTime * 100) / 100;
-		this.deltaTime = totalTime;
+		this.deltaTime = (double)(totalTime);
 	}
 	
 	public void setLifeCycleStep(String lifeCycleStep) {
