@@ -1,10 +1,10 @@
-import api.Backend;
-import api.PlaintextBearerAuthentication;
-import api.exceptions.APITransformException;
-import api.request.CreateRequest;
-import api.request.DeleteRequest;
-import api.request.GetRequest;
-import api.request.UpdateRequest;
+import tu14.api.Backend;
+import tu14.api.PlaintextBearerAuthentication;
+import tu14.api.exceptions.APITransformException;
+import tu14.api.request.CreateRequest;
+import tu14.api.request.DeleteRequest;
+import tu14.api.request.GetRequest;
+import tu14.api.request.UpdateRequest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

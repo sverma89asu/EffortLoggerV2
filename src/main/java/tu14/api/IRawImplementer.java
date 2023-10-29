@@ -1,6 +1,6 @@
-package api;
+package tu14.api;
 
-import api.exceptions.APITransformException;
+import tu14.api.exceptions.APITransformException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public interface IRawImplementer<T extends IRawImplementer<T>> {

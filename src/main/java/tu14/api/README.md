@@ -1,16 +1,16 @@
 This backend service communicates with the backend.
 
-To use it, instantiate an instance of `api.Backend.Backend`.
+To use it, instantiate an instance of `tu14.api.Backend.Backend`.
 
-`api.Backend.Backend` requires an `api.IAuthenticationService`. 
+`tu14.api.Backend.Backend` requires an `tu14.api.IAuthenticationService`. 
 At this time, `IAuthenticationService` is provided by 
 the following classes:
-- `api.PlaintextBearerAuthentication`
+- `tu14.api.PlaintextBearerAuthentication`
   - `PlaintextBearerAuthentication(String token)`
   - `PlaintextBearerAuthentication(String username, String password)`
 
 To send a request, use `Backend.send(APIRequest, Class<T>)`.
-The request reply will be cast to `api.RawData<T>`. 
+The request reply will be cast to `tu14.api.RawData<T>`. 
 To get data from `RawData<T>`, use the `cast()` or `castSafe()` method.
 
 `Backend.send()` returns `CompletableFuture<<RawData<T>>`.
@@ -24,7 +24,7 @@ To get data from `RawData<T>`, use the `cast()` or `castSafe()` method.
 All implementers implement the following:
 - `id(long)` sets the row id. This is required for deletes and updates.
 - `table(String)` sets the table. This is required for all requests. 
-Set values for known tables can be found in `api.tables.Tables`
+Set values for known tables can be found in `tu14.api.tables.Tables`
 - `body(IRawImplementer<T>)` sets the request body. This is required 
 for creates and updates, and forbidden for gets and deletes.
 

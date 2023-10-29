@@ -1,10 +1,9 @@
-package api;
+package tu14.api;
 
-import api.request.APIRequest;
+import tu14.api.request.APIRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;

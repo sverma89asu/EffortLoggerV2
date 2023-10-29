@@ -1,6 +1,5 @@
-package api;
+package tu14.api;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.net.http.HttpRequest;
 import java.util.Base64;
 

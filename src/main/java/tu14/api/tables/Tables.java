@@ -1,4 +1,4 @@
-package api.tables;
+package tu14.api.tables;
 
 public class Tables {
 

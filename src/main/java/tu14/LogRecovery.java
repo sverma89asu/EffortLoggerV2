@@ -1,3 +1,5 @@
+package tu14;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -26,7 +28,7 @@ public class LogRecovery {
 
             conn.disconnect();
 
-            // Convert the retrieved JSON data to a LogType object
+            // Convert the retrieved JSON data to a tu14.LogType object
             LogType retrievedLog = parseLogType(response.toString());
             return retrievedLog;
 
