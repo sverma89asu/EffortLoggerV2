@@ -19,7 +19,7 @@ public class RawUserData implements IRawImplementer<RawUserData> {
     }
 
     @Override
-    public RawUserData construct(JsonNode data) throws APITransformException {
+    public RawUserData construct(JsonNode data) {
         // TODO catch this; it could throw a runtime exception
         this.id = data.get("id").asInt();
         this.username = data.get("username").asText();
