@@ -1,11 +1,9 @@
 package tu14.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import tu14.MainApp;
 
 import java.util.concurrent.CompletableFuture;
@@ -17,7 +15,7 @@ public class IndexController {
     public TextField password_visible;
     public TextField username;
     public ProgressBar progress_bar;
-
+    public Label error_label;
 
     @FXML
     void togglePasswordVisibility(ActionEvent actionEvent) {
@@ -30,12 +28,17 @@ public class IndexController {
 
         password.setVisible(!passwordShouldBeVisible);
         password_visible.setVisible(passwordShouldBeVisible);
+
+        password.setManaged(!passwordShouldBeVisible);
+        password_visible.setManaged(passwordShouldBeVisible);
     }
 
     @FXML
-    public void submitLoginForm(ActionEvent actionEvent) throws ExecutionException, InterruptedException {
+    public void submitLoginForm(ActionEvent actionEvent) {
         String usernameValue = username.getText();
         String passwordValue = password.isVisible() ? password.getText() : password_visible.getText();
+
+        // TODO we want to validate our username & password here
 
         progress_bar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
@@ -49,10 +52,19 @@ public class IndexController {
                 e.printStackTrace();
             }
             return null;
-        }).get();
+        }).thenAccept((nil) -> {
+            // TODO if login fail, set error label
+            // NOTE the Platform.runLater is to prevent an issue in JavaFX threads where you get a whole bunch of
+            // errors.
+            Platform.runLater(() -> {
+                error_label.setText("Uh-oh! Random Error");
+                progress_bar.setProgress(0);
+            });
 
-        progress_bar.setProgress(0);
-        MainApp.go("home.fxml");
+            MainApp.go("home.fxml");
+        });
+
+
     }
 
 

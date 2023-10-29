@@ -1,6 +1,7 @@
 package tu14;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,9 +12,12 @@ import java.io.IOException;
 public class MainApp extends Application {
 
     private static Stage stage;
+    private static Scene prev = null;
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        Platform.setImplicitExit(true);
 
         MainApp.stage = stage;
 
@@ -34,17 +38,31 @@ public class MainApp extends Application {
     }
 
     public static void go(String fxml) {
-        Parent root;
-        try {
-            root = FXMLLoader.load(MainApp.class.getResource(fxml));
-        } catch (IOException e) {
-            System.err.println("Error: resource " + fxml + " not accessible");
-            return;
+        Platform.runLater(() -> {
+            Parent root;
+            try {
+                root = FXMLLoader.load(MainApp.class.getResource(fxml));
+            } catch (IOException e) {
+                System.err.println("Error: resource " + fxml + " not accessible");
+                return;
+            }
+
+            Scene current = stage.getScene();
+            prev = current;
+
+            Scene rootScene = new Scene(root, current.getWidth(), current.getHeight());
+
+            stage.setScene(rootScene);
+        });
+    }
+
+    public static void back() {
+        if (prev != null) {
+            Platform.runLater(() -> {
+                Scene current = stage.getScene();
+                stage.setScene(prev);
+                prev = current;
+            });
         }
-
-        Scene current = stage.getScene();
-        Scene rootScene = new Scene(root, current.getWidth(), current.getHeight());
-
-        stage.setScene(rootScene);
     }
 }

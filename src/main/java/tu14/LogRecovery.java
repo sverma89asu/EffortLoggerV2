@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.json.JSONObject; //Include org.json into Lib
+//import org.json.JSONObject; //Include org.json into Lib
 
 public class LogRecovery {
     public LogType retrieveLogFromServer() {
@@ -28,9 +28,8 @@ public class LogRecovery {
 
             conn.disconnect();
 
-            // Convert the retrieved JSON data to a tu14.LogType object
-            LogType retrievedLog = parseLogType(response.toString());
-            return retrievedLog;
+            // Convert the retrieved JSON data to a LogType object
+            return parseLogType(response.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,14 +40,14 @@ public class LogRecovery {
     private LogType parseLogType(String json) {
         LogType log = new LogType();
         try {
-            JSONObject jsonObject = new JSONObject(json);
-            log.setLogNumber(jsonObject.getInt("id"));
-            log.setDate(jsonObject.getString("start"));
-            log.setStartTime(jsonObject.getString("start"));
-            log.setEndTime(jsonObject.getString("end"));
-            log.setLifeCycleStep(jsonObject.getString("lifeCycle"));
-            log.setEffortCategory(jsonObject.getString("effortCategory"));
-            log.setDeliverable(jsonObject.getString("deliverable"));
+//            JSONObject jsonObject = new JSONObject(json);
+//            log.setLogNumber(jsonObject.getInt("id"));
+//            log.setDate(jsonObject.getString("start"));
+//            log.setStartTime(jsonObject.getString("start"));
+//            log.setEndTime(jsonObject.getString("end"));
+//            log.setLifeCycleStep(jsonObject.getString("lifeCycle"));
+//            log.setEffortCategory(jsonObject.getString("effortCategory"));
+//            log.setDeliverable(jsonObject.getString("deliverable"));
         } catch (Exception e) {
             e.printStackTrace();
         }
