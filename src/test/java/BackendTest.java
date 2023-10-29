@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BackendTest {
@@ -32,7 +31,7 @@ public class BackendTest {
     @Test
     void TestComplete() throws ExecutionException, InterruptedException, APITransformException {
 
-        Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
+        Backend backend = Backend.getInstance();
 
         User us = new User("test" + id, "pwd");
 
@@ -40,7 +39,7 @@ public class BackendTest {
 
         for (User user : users) {
             System.out.println(user.toString());
-            assertFalse(id == user.id);
+            assertNotEquals(id, user.id);
         }
 
         int count = users.size();
@@ -86,7 +85,7 @@ public class BackendTest {
     @AfterAll
     void tearDown() {
         if (failed) {
-            Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
+            Backend backend = Backend.getInstance();
             backend.send(new DeleteRequest().table("user").id(id), User.class);
         }
     }

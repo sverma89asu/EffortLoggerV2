@@ -21,9 +21,30 @@ public class Backend {
 
     private static final String BASE_URL = "https://cse360.flerp.dev";
 
+    private static Backend backend = null;
+
+    private Backend(IAuthenticationService service, HttpClient client) {
+        this.auth = service;
+        this.httpClient = client;
+    }
+
+    public static Backend getInstance(IAuthenticationService service) {
+        if (backend == null) {
+            backend = new Backend(service, HttpClient.newHttpClient());
+        }
+        return backend;
+    }
+
+    public static Backend getInstance() {
+        return getInstance(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
+    }
+
+    /**
+     * @deprecated use {@link #getInstance()}
+     */
+    @Deprecated
     public Backend(IAuthenticationService authenticationService) {
-        auth = authenticationService;
-        httpClient = HttpClient.newHttpClient();
+        this(authenticationService, HttpClient.newHttpClient());
     }
 
     protected <K extends IRawImplementer<K>> CompletableFuture<HttpResponse<RawData<K>>> makeRequest(Class<K> kClass) {
