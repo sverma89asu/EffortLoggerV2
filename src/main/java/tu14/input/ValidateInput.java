@@ -1,4 +1,4 @@
-package tu14;
+package tu14.input;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

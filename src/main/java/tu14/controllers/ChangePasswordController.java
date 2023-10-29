@@ -1,17 +1,19 @@
-import api.Backend;
-import api.PlaintextBearerAuthentication;
-import api.RawData;
-import api.request.UpdateRequest;
+package tu14.controllers;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import tu14.MainApp;
+import tu14.api.Backend;
+import tu14.api.PlaintextBearerAuthentication;
+import tu14.api.RawData;
+import tu14.api.request.UpdateRequest;
+import tu14.user.RawUserData;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -43,50 +45,40 @@ public class ChangePasswordController {
     private Button eyeButtonConfirmPassword;
 
     @FXML
-    private Text changePasswordMessage;
-
-    @FXML
     private Text warningText;
-
-    private boolean passwordVisibleNew = false;
-
-    private boolean passwordVisibleConfirm = false;
     public void togglePasswordVisibilityNew() {
-        passwordVisibleNew = !passwordVisibleNew;
+        // TODO extract password visibility toggles into a utility
+        boolean passwordShouldBeVisible = newPasswordField.isVisible();
 
-        if (passwordVisibleNew) {
-            eyeButtonNewPassword.setText("Hide");
-            newPasswordField.setVisible(false);
-            newPasswordField.setManaged(false);
-            newPasswordText.setVisible(true);
-            newPasswordText.setManaged(true);
+        if (passwordShouldBeVisible)
             newPasswordText.setText(newPasswordField.getText());
-        } else {
-            eyeButtonNewPassword.setText("Show");
-            newPasswordField.setVisible(true);
-            newPasswordField.setManaged(true);
-            newPasswordText.setVisible(false);
-            newPasswordText.setManaged(false);
-        }
+        else
+            newPasswordField.setText(newPasswordText.getText());
+
+        newPasswordField.setVisible(!passwordShouldBeVisible);
+        newPasswordText.setVisible(passwordShouldBeVisible);
+
+        newPasswordField.setManaged(!passwordShouldBeVisible);
+        newPasswordText.setManaged(passwordShouldBeVisible);
+
+        eyeButtonNewPassword.setText(passwordShouldBeVisible ? "Hide" : "Show");
     }
 
     public void togglePasswordVisibilityConfirm() {
-        passwordVisibleConfirm = !passwordVisibleConfirm;
+        boolean passwordShouldBeVisible = confirmPasswordField.isVisible();
 
-        if (passwordVisibleConfirm) {
-            eyeButtonConfirmPassword.setText("Hide");
-            confirmPasswordField.setVisible(false);
-            confirmPasswordField.setManaged(false);
-            confirmPasswordText.setVisible(true);
-            confirmPasswordText.setManaged(true);
+        if (passwordShouldBeVisible)
             confirmPasswordText.setText(confirmPasswordField.getText());
-        } else {
-            eyeButtonConfirmPassword.setText("Show");
-            confirmPasswordField.setVisible(true);
-            confirmPasswordField.setManaged(true);
-            confirmPasswordText.setVisible(false);
-            confirmPasswordText.setManaged(false);
-        }
+        else
+            confirmPasswordField.setText(confirmPasswordText.getText());
+
+        confirmPasswordField.setVisible(!passwordShouldBeVisible);
+        confirmPasswordText.setVisible(passwordShouldBeVisible);
+
+        confirmPasswordField.setManaged(!passwordShouldBeVisible);
+        confirmPasswordText.setManaged(passwordShouldBeVisible);
+
+        eyeButtonConfirmPassword.setText(passwordShouldBeVisible ? "Hide" : "Show");
     }
 
     //this function will run when user inputs new and confirmed password and clicks on change password button
@@ -97,10 +89,7 @@ public class ChangePasswordController {
             warningText.setText("New password and confirm password should match");
         }
         else{
-            boolean isValidPassword = true;
-            if (newPassword.length() < 8) {
-                isValidPassword = false;
-            }
+            boolean isValidPassword = newPassword.length() >= 8;
 
             // Check for at least one uppercase letter
             Pattern uppercasePattern = Pattern.compile("[A-Z]");
@@ -111,11 +100,11 @@ public class ChangePasswordController {
             Matcher lowercaseMatcher = lowercasePattern.matcher(newPassword);
 
             // Check for at least one numeric character
-            Pattern digitPattern = Pattern.compile("[0-9]");
+            Pattern digitPattern = Pattern.compile("\\d");
             Matcher digitMatcher = digitPattern.matcher(newPassword);
 
             // Check for at least one special character (non-alphanumeric)
-            Pattern specialCharPattern = Pattern.compile("[^A-Za-z0-9]");
+            Pattern specialCharPattern = Pattern.compile("\\W");
             Matcher specialCharMatcher = specialCharPattern.matcher(newPassword);
 
             // Return true if all conditions are met
@@ -132,36 +121,23 @@ public class ChangePasswordController {
                     //NOTE: Christoph, maybe impl a factory/singleton thingy?
                     Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
 
-                    RawData<?> data = backend.send(new UpdateRequest().table("user").id(Main.userData.getId()).body(new RawUserData(Main.userData, newPassword)), null).get();
+                    RawData<?> data = backend.send(
+                            new UpdateRequest().table("user").id(MainApp.getUser().getId())
+                                    .body(new RawUserData(MainApp.getUser(), newPassword)), null).get();
 
                     if (data.ok()) {
-                        navigateToMyAccount();
+                        MainApp.back();
                     } else {
                         System.out.println(data.errorMessage);
                         warningText.setText("Password could not be changed, please try again");
                     }
-                    // Close the connection
                 } catch (Exception e) {
                     // NOTE it's usually a bad idea to catch all exceptions like this. Java explicitly has two exception types just for this purpose.
                     e.printStackTrace();
                 }
             }
         }
-        // Implement password change logic here, including checking for password requirements.
-
-        // For simplicity, assume successful password change and navigate back to My Account.
-
     }
 
-    private void navigateToMyAccount() {
-        try {
-            Parent myAccountRoot = FXMLLoader.load(getClass().getResource("myaccount.fxml"));
-            Scene myAccountScene = new Scene(myAccountRoot, 400, 300);
 
-            Stage stage = (Stage) newPasswordField.getScene().getWindow();
-            stage.setScene(myAccountScene);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

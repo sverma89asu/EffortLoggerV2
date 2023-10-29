@@ -1,10 +1,9 @@
+package tu14.logs;
+
+import tu14.input.ValidateInput;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 public class LogOfLogs {
@@ -25,14 +24,6 @@ public class LogOfLogs {
 		// oldLog is our original log we will edit
 		LogType oldLog = new LogType(1, "2023/10/28", "18:15:56", "19:59:00", "Producable Cycle", "100%", "Sunday");
 		LogType oldLog2 = new LogType(2, "2023/10/28", "18:15:56", "19:59:00", "Producable Cycle", "100%", "Sunday");
-		LogsArray.add(oldLog);
-		LogsArray.add(oldLog2);
-		LogSender logSender = new LogSender();
-
-	    for (int i = 0; i < LogsArray.size(); i++) {
-	    	logSender.sendLogsToServer(LogsArray.get(i));
-	    }
-	    
 		LogsArray.add(oldLog); LogsArray.add(oldLog2);
 		LogType newLog = new LogType(oldLog); // newLog to show the edited version 
 		LogType newLog2 = new LogType(oldLog2);

@@ -5,9 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import tu14.MainApp;
+import tu14.api.Backend;
+import tu14.api.PlaintextBearerAuthentication;
+import tu14.api.RawData;
+import tu14.api.request.GetRequest;
+import tu14.input.ValidateInput;
+import tu14.user.RawUserData;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class IndexController {
 
@@ -42,30 +47,36 @@ public class IndexController {
 
         progress_bar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
-        // TODO actual login code
-        // the below is just some placeholder wait code
+        // TODO centralized Backend() instances
+        Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
 
-        CompletableFuture.supplyAsync(() -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        backend.send(new GetRequest().table("user"), RawUserData.class).thenAccept((raw) -> {
+            if (!raw.ok()) {
+                Platform.runLater(() -> {
+                    System.err.println(raw.errorMessage);
+                    error_label.setText("Failed to send GET request");
+                    progress_bar.setProgress(0);
+                });
+
+                return;
             }
-            return null;
-        }).thenAccept((nil) -> {
-            // TODO if login fail, set error label
-            // NOTE the Platform.runLater is to prevent an issue in JavaFX threads where you get a whole bunch of
-            // errors.
-            Platform.runLater(() -> {
-                error_label.setText("Uh-oh! Random Error");
-                progress_bar.setProgress(0);
-            });
 
-            MainApp.go("home.fxml");
+            for (RawUserData datum : raw.castSafe()) {
+                if (datum.username.equals(usernameValue) && datum.password.equals(passwordValue)) {
+                    // TODO set User singleton here
+
+                    // set error message if we fail to progress pages
+                    Platform.runLater(() -> {
+                        error_label.setText("Unknown Error Unable to progress to next page");
+                        progress_bar.setProgress(0);
+                    });
+
+                    MainApp.go("home.fxml");
+                    return;
+                }
+            }
+
+            Platform.runLater(() -> error_label.setText("Invalid username or password"));
         });
-
-
     }
-
-
 }

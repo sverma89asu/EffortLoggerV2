@@ -3,9 +3,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MyAccountController">
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tu14.controllers.MyAccountController">
     <Label text="My Account" style="-fx-font-size: 24px;"/>
     <Text text="Welcome to your account." />
-    <Button text="Change Password" onAction="#changePassword" fx:id="changePasswordButton"/>
+    <Button text="Change Password" onAction="#changePassword"/>
     <Button text="Logout" onAction="#logout"/>
 </VBox>

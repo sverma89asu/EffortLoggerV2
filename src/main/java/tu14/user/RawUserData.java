@@ -1,7 +1,8 @@
-import api.IRawImplementer;
-import api.exceptions.APITransformException;
+package tu14.user;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
+import tu14.api.IRawImplementer;
 
 public class RawUserData implements IRawImplementer<RawUserData> {
 
