@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.json.JSONObject; //Include org.json into Lib
 
 public class LogRecovery {
     public LogType retrieveLogFromServer() {
@@ -12,12 +13,10 @@ public class LogRecovery {
             conn.setRequestProperty("Accept", "application/json");
 
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
             String output;
             StringBuilder response = new StringBuilder();
@@ -27,17 +26,30 @@ public class LogRecovery {
 
             conn.disconnect();
 
-            // (Working on it):
-            // Convert the retrieved JSON data to a src.main.java.LogType object
-            // Parse the JSON response and set the values to a new src.main.java.LogType object
-            // Example:
-            // src.main.java.LogType retrievedLog = parseAndCreateLogType(response.toString());
-            // return retrievedLog;
-            // Need to implement the parseAndCreateLogType method to parse the JSON response
+            // Convert the retrieved JSON data to a LogType object
+            LogType retrievedLog = parseLogType(response.toString());
+            return retrievedLog;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private LogType parseLogType(String json) {
+        LogType log = new LogType();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            log.setLogNumber(jsonObject.getInt("id"));
+            log.setDate(jsonObject.getString("start"));
+            log.setStartTime(jsonObject.getString("start"));
+            log.setEndTime(jsonObject.getString("end"));
+            log.setLifeCycleStep(jsonObject.getString("lifeCycle"));
+            log.setEffortCategory(jsonObject.getString("effortCategory"));
+            log.setDeliverable(jsonObject.getString("deliverable"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return log;
     }
 }
