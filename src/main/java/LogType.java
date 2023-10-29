@@ -45,7 +45,7 @@ public class LogType {
 		this.deltaTime = (this.getDeltaTime(startTime, endTime));
 	}
 	
-	public int getLogNumbeR() {
+	public int getLogNumber() {
 		return logNumber;
 	}
 	
