@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 public class LogOfLogs {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) {
 		// Date date1 = null, date2 = null;
 		Scanner scan;
 		boolean isValid;
-		ArrayList<LogType> LogsArray = new ArrayList<LogType>();
-		ArrayList<LogType> LogsArrayEdited = new ArrayList<LogType>();
-		String time1 = "00:00:00";
-		String time2 = "00:00:00";
+		ArrayList<LogType> LogsArray = new ArrayList<>();
+		ArrayList<LogType> LogsArrayEdited = new ArrayList<>();
+		String time1;
+		String time2;
 		
 		/* Create a new log using variables:
 			int logNumber, String date, String startTime, String endTime, 
@@ -27,27 +27,23 @@ public class LogOfLogs {
 		LogsArray.add(oldLog); LogsArray.add(oldLog2);
 		LogType newLog = new LogType(oldLog); // newLog to show the edited version 
 		LogType newLog2 = new LogType(oldLog2);
-				
-		
-		isValid = true;
+
+
 		scan = new Scanner(System.in);
 		int logNumber = -1;
 		do {
 			System.out.println("Which Log Number do you want to change? Choose 1-" + LogsArray.size());
 			try {
-				isValid = true;
 				logNumber = scan.nextInt() - 1;
 				scan.nextLine();
 			}
 			catch(Exception e) {
 				scan.nextLine();
-				isValid = false;
 			}
 		} while (logNumber < 0 || logNumber > LogsArray.size());
-		
-		isValid = true; // check if the option given is valid (0-7)
-		int line = -1; // begin line at -1 so it doesn't go to any switch statement
-		String answer = "";
+
+		int line; // begin line at -1 so it doesn't go to any switch statement
+		String answer;
 		do {
 			// Output options they can use
 			System.out.println("Which change would you like to make?\nEnter the number:");
@@ -151,22 +147,22 @@ public class LogOfLogs {
 					}
 					break;
 				}
-				if (isValid == true) {
+				if (isValid) {
 					System.out.println("Change made! Next change?");
 				}
 		} while (line != 0);
 		LogsArrayEdited.add(LogsArray.get(logNumber));
 		scan.close();
 		
-		System.out.println("\nOLD 1: \n" + oldLog.toString());
-		System.out.println("NEW 1: \n" + newLog.toString());
+		System.out.println("\nOLD 1: \n" + oldLog);
+		System.out.println("NEW 1: \n" + newLog);
 		
-		System.out.println("\nOLD 2: \n" + oldLog2.toString());
-		System.out.println("NEW 2: \n" + newLog2.toString());
-		
-		for (int i = 0; i < LogsArrayEdited.size(); i++) {
+		System.out.println("\nOLD 2: \n" + oldLog2);
+		System.out.println("NEW 2: \n" + newLog2);
+
+		for (LogType logType : LogsArrayEdited) {
 			System.out.println("List of edited logs:");
-			System.out.println(LogsArrayEdited.get(i).toString());
+			System.out.println(logType.toString());
 		}
 		
 	}
