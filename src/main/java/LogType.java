@@ -1,6 +1,5 @@
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.Date;
 
 public class LogType {
 	private int logNumber;
@@ -45,7 +44,7 @@ public class LogType {
 		this.deltaTime = (this.getDeltaTime(startTime, endTime));
 	}
 	
-	public int getLogNumbeR() {
+	public int getLogNumber() {
 		return logNumber;
 	}
 	
@@ -65,9 +64,9 @@ public class LogType {
 		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		double seconds = (minutes % 60);
 		double newSeconds = seconds / 60;
-		double totalTime = (double)(newSeconds + minutes);
+		double totalTime = newSeconds + minutes;
 		totalTime = Math.floor(totalTime * 100) / 100;
-		return (double)totalTime;
+		return totalTime;
 	}
 	
 	public String getLifeCycleStep() {
@@ -105,9 +104,9 @@ public class LogType {
 		long minutes = Duration.between(LocalTime.parse(time1), LocalTime.parse(time2)).toMinutes();
 		double seconds = (minutes % 60);
 		double newSeconds = seconds / 60;
-		double totalTime = (double)(newSeconds + minutes);
+		double totalTime = newSeconds + minutes;
 		totalTime = Math.floor(totalTime * 100) / 100;
-		this.deltaTime = (double)(totalTime);
+		this.deltaTime = totalTime;
 	}
 	
 	public void setLifeCycleStep(String lifeCycleStep) {
