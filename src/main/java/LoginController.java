@@ -11,18 +11,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+/**
+ * Author: Shikha Verma
+ * Date: 2023-10-27
+ * Description: This Java class implements the login functionality for the effortlogger
+ */
 public class LoginController {
 
     @FXML
@@ -69,7 +65,7 @@ public class LoginController {
         boolean isLoginSuccess = false;
         try {
             // Define the URL you want to send the GET request to
-            String url = "https://cse360.flerp.dev/tables/users";
+            String url = "https://cse360.flerp.dev/tables/user";
 
             // Create a URL object
             URL requestUrl = new URL(url);
@@ -100,6 +96,7 @@ public class LoginController {
                 reader.close();
 
                 // Parse the JSON response using Jackson
+                System.out.println(response);
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonArray = objectMapper.readTree(response.toString());
 
@@ -107,18 +104,14 @@ public class LoginController {
                 for (JsonNode jsonNode : jsonArray) {
                     String username1 = jsonNode.get("username").asText();
                     String password1 = jsonNode.get("password").asText();
+                    int id = jsonNode.get("id").asInt();
                     if(username.equals(username1) && password.equals(password1)){
                         Main.userData.setUsername(username);
-                        Main.userData.setPassword(password);
+                        Main.userData.setId(id);
                         isLoginSuccess = true;
                         navigateToMyAccount();
                         break;
                     }
-                    int role = jsonNode.get("role").asInt();
-                    System.out.println("Username: " + username1);
-                    System.out.println("Password: " + password1);
-                    System.out.println("Role: " + role);
-                    System.out.println();
                 }
                 if(!isLoginSuccess){
                     warningText.setText("Invalid username or password.");

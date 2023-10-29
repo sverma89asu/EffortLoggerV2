@@ -1,7 +1,11 @@
+/**
+ * Author: Shikha Verma
+ * Date: 2023-10-27
+ * Description: This Java class will contain information of the logged in user
+ */
 public class UserData {
+    private int id;
     private String username;
-
-    private String password;
 
     public String getUsername() {
         return username;
@@ -11,11 +15,11 @@ public class UserData {
         this.username = username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public int getId(){
+        return id;
     }
 
-    public String getPassword(){
-        return password;
+    public void setId(int id){
+        this.id = id;
     }
 }

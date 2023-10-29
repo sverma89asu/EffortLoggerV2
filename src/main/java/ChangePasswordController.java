@@ -8,9 +8,23 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 
+
+/**
+ * Author: Shikha Verma
+ * Date: 2023-10-27
+ * Description: This Java class implements all the backend of change password for the effortlogger
+ */
 public class ChangePasswordController {
 
     @FXML
@@ -77,6 +91,8 @@ public class ChangePasswordController {
             confirmPasswordText.setManaged(false);
         }
     }
+
+    //this function will run when user inputs new and confirmed password and clicks on change password button
     public void changePassword(ActionEvent event) {
         String newPassword = newPasswordField.getText();
         String confirmPassword = confirmPasswordField.getText();
@@ -113,7 +129,69 @@ public class ChangePasswordController {
                 warningText.setText("Please make sure the password is 8 characters long, contains at least one upper case, one lower case, one numeric and one special character");
             }
             else{
-                navigateToMyAccount();
+                try {
+                    // Define the URL of the API endpoint
+                    String url = "https://cse360.flerp.dev/tables/user";
+
+                    // Create a URL object
+                    URL obj = new URL(url);
+
+                    // Open a connection to the URL
+                    HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+
+                    // Set the request method to PUT
+                    connection.setRequestMethod("POST");
+
+                    // Set request headers
+                    connection.setRequestProperty("Authorization", "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5");
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    connection.setRequestProperty("X-Data-ID", Integer.toString(Main.userData.getId()));
+
+                    // Enable input/output streams for sending data
+                    connection.setDoOutput(true);
+
+                    // Create a Map for the request body
+                    Map<String, String> requestBodyMap = new HashMap<>();
+                    requestBodyMap.put("username", Main.userData.getUsername());
+                    requestBodyMap.put("password", newPassword);
+
+                    // Convert the Map to a JSON string
+                    String jsonRequestBody = new Gson().toJson(requestBodyMap);
+
+                    // Write the request body data
+                    try (DataOutputStream out = new DataOutputStream(connection.getOutputStream())) {
+                        out.writeBytes(jsonRequestBody);
+                        out.flush();
+                    }
+
+                    // Get the HTTP response code
+                    int responseCode = connection.getResponseCode();
+
+                    // Read the response from the server
+                    if(responseCode == HttpURLConnection.HTTP_OK){
+                        connection.disconnect();
+                        navigateToMyAccount();
+                    }
+                    else{
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        String line;
+                        StringBuffer response = new StringBuffer();
+
+                        while ((line = reader.readLine()) != null) {
+                            response.append(line);
+                        }
+                        reader.close();
+
+                        // Parse the JSON response using Jackson
+                        System.out.println(response);
+                        warningText.setText("Password could not be changed, please try again");
+                    }
+                    // Close the connection
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         // Implement password change logic here, including checking for password requirements.

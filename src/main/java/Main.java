@@ -3,7 +3,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ * Author: Shikha Verma
+ * Date: 2023-10-27
+ * Description: This is the entry point for our effortlogger application
+ */
 public class Main extends Application {
     public static UserData userData = new UserData();
 
