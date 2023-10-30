@@ -26,4 +26,8 @@ public class MyAccountController {
     public void logout(ActionEvent event) {
         MainApp.go("index.fxml");
     }
+
+    public void toDashboard(ActionEvent actionEvent) {
+        MainApp.go("effort.fxml");
+    }
 }

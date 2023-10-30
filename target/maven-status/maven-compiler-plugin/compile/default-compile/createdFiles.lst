@@ -13,6 +13,7 @@ tu14\api\exceptions\InvalidDatatypeException.class
 tu14\logs\LogOfLogs.class
 tu14\api\request\UpdateRequest.class
 tu14\api\PlaintextBearerAuthentication.class
+tu14\controllers\ViewLogsController.class
 tu14\MainApp.class
 tu14\api\request\GetRequest.class
 tu14\api\Backend.class

@@ -2,10 +2,13 @@ package tu14;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tu14.logs.EffortLog;
 import tu14.user.UserData;
 
 import java.io.IOException;
@@ -17,9 +20,14 @@ public class MainApp extends Application {
     private static Scene prev = null;
 
     private static UserData user;
+    private static ObservableList<EffortLog> logs;
 
     public static UserData getUser() {
         return user;
+    }
+
+    public static ObservableList<EffortLog> getLogs() {
+        return logs;
     }
 
     @Override
@@ -27,6 +35,7 @@ public class MainApp extends Application {
 
         // setup services and singletons
         user = new UserData();
+        logs = FXCollections.observableArrayList();
 
         Platform.setImplicitExit(true);
 

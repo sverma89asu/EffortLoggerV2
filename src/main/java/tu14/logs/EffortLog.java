@@ -2,6 +2,10 @@ package tu14.logs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import tu14.api.IRawImplementer;
 import tu14.api.exceptions.APITransformException;
 
@@ -14,7 +18,7 @@ public class EffortLog implements IRawImplementer<EffortLog> {
     private Instant start;
     private Instant end;
 
-    private double duration; // NOTE: in milliseconds
+    private long duration; // NOTE: in milliseconds
 
     // Not encapsulated because we aren't restricting the thing
     public String lifeCycle;
@@ -32,6 +36,7 @@ public class EffortLog implements IRawImplementer<EffortLog> {
         this.lifeCycle = lifeCycle;
         this.effortCategory = effortCategory;
         this.deliverable = deliverable;
+        recalculateDuration();
     }
 
     public static EffortLog copy(EffortLog log) {
@@ -84,5 +89,33 @@ public class EffortLog implements IRawImplementer<EffortLog> {
     public void setEnd(Instant end) {
         this.end = end;
         recalculateDuration();
+    }
+
+    //This is for tableView and it's ridiculous
+    public IntegerProperty idProperty() {
+        return new SimpleIntegerProperty(id);
+    }
+
+    public StringProperty startProperty() {
+        return new SimpleStringProperty(start.toString());
+    }
+
+    public StringProperty durationProperty() {
+        Duration d = Duration.ofMillis(duration);
+
+        return new SimpleStringProperty(String.format("%d:%02d:%02d", d.toHours(),
+                                                      d.toMinutesPart(), d.toSecondsPart()));
+    }
+
+    public StringProperty lifecycleProperty() {
+        return new SimpleStringProperty(lifeCycle);
+    }
+
+    public StringProperty effortProperty() {
+        return new SimpleStringProperty(effortCategory);
+    }
+
+    public StringProperty deliverableProperty() {
+        return new SimpleStringProperty(deliverable);
     }
 }
