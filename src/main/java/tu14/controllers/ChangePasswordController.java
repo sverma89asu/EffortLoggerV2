@@ -83,8 +83,8 @@ public class ChangePasswordController {
 
     //this function will run when user inputs new and confirmed password and clicks on change password button
     public void changePassword(ActionEvent event) {
-        String newPassword = newPasswordField.getText();
-        String confirmPassword = confirmPasswordField.getText();
+        String newPassword = newPasswordField.isVisible() ? newPasswordField.getText() : newPasswordText.getText();
+        String confirmPassword = confirmPasswordField.isVisible() ? confirmPasswordField.getText() : confirmPasswordText.getText();
         if(!newPassword.equals(confirmPassword)){
             warningText.setText("New password and confirm password should match");
         }

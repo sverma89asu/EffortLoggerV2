@@ -12,7 +12,7 @@ import java.net.http.HttpRequest;
 
 public abstract class APIRequest {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     static {
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
@@ -30,13 +30,13 @@ public abstract class APIRequest {
     }
 
     public APIRequest id(long id) {
-        if (id <= 0) throw new IllegalArgumentException();
+        if (id < 0) throw new IllegalArgumentException();
         this.id = id;
 
         return this;
     }
 
-    public APIRequest body(IRawImplementer implementer) {
+    public APIRequest body(IRawImplementer<?> implementer) {
         mapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
         try {
             body = mapper.writeValueAsString(implementer);

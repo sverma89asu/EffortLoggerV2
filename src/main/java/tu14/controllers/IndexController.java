@@ -62,18 +62,24 @@ public class IndexController {
                 if (datum.username.equals(usernameValue) && datum.password.equals(passwordValue)) {
                     // TODO set User singleton here
 
+                    MainApp.getUser().setId(datum.id);
+                    MainApp.getUser().setUsername(datum.username);
+
                     // set error message if we fail to progress pages
                     Platform.runLater(() -> {
                         error_label.setText("Unknown Error Unable to progress to next page");
                         progress_bar.setProgress(0);
                     });
 
-                    MainApp.go("home.fxml");
+                    MainApp.go("myaccount.fxml");
                     return;
                 }
             }
 
-            Platform.runLater(() -> error_label.setText("Invalid username or password"));
+            Platform.runLater(() -> {
+                error_label.setText("Invalid username or password");
+                progress_bar.setProgress(0);
+            });
         });
     }
 }
