@@ -5,6 +5,7 @@ public class LogOfLogs {
 	public static void EditLog(ArrayList<LogType> CurrentLogs, ArrayList<LogType> OldLogs) {
 		Scanner scan;
 		boolean isValid;
+		boolean changeMade = false;
 		String time1 = "00:00:00";
 		String time2 = "00:00:00";
 		
@@ -132,9 +133,17 @@ public class LogOfLogs {
 				}
 				if (isValid == true && line != 0) {
 					System.out.println("Change made! Next change?");
+					changeMade = true;
 				}
 		} while (line != 0);
-		OldLogs.add(CurrentLogs.get(logNumber));
+		if (changeMade == true) {
+			OldLogs.add(CurrentLogs.get(logNumber));
+		}
 		scan.close();
+		
+		for (int i = 0; i < OldLogs.size(); i++) {
+			System.out.println(OldLogs.get(i).toString());
+		}
+		
 	}
 }
