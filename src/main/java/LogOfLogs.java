@@ -139,11 +139,6 @@ public class LogOfLogs {
 		if (changeMade == true) {
 			OldLogs.add(CurrentLogs.get(logNumber));
 		}
-		scan.close();
-		
-		for (int i = 0; i < OldLogs.size(); i++) {
-			System.out.println(OldLogs.get(i).toString());
-		}
-		
+		scan.close();		
 	}
 }
