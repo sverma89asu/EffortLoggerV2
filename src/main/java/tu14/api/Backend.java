@@ -28,6 +28,9 @@ public class Backend {
         this.httpClient = client;
     }
 
+    /**
+     * Singleton Factory method to get a backend, providing an auth service
+     */
     public static Backend getInstance(IAuthenticationService service) {
         if (backend == null) {
             backend = new Backend(service, HttpClient.newHttpClient());
@@ -35,6 +38,9 @@ public class Backend {
         return backend;
     }
 
+    /**
+     * Singleton Factory method to get a backend
+     */
     public static Backend getInstance() {
         return getInstance(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
     }
@@ -59,6 +65,11 @@ public class Backend {
         return httpClient.sendAsync(request, new RawBodyHandler<>(kClass));
     }
 
+    /**
+     * Send an APIRequest to the server
+     * @param request the APIRequest to send
+     * @param kClass the IRawImplementer type to transform resultant data into
+     */
     public <K extends IRawImplementer<K>> CompletableFuture<RawData<K>> send(APIRequest request, Class<K> kClass) {
         requestBuilder = HttpRequest.newBuilder();
 

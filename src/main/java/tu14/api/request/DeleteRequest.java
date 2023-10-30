@@ -2,7 +2,7 @@ package tu14.api.request;
 
 import java.net.http.HttpRequest;
 
-public class DeleteRequest extends APIRequest {
+public final class DeleteRequest extends APIRequest {
     @Override
     public void includeRequestDataLayer(HttpRequest.Builder request) {
         if (body != null) {

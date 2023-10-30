@@ -1,6 +1,7 @@
 package tu14.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import tu14.MainApp;
 import tu14.logs.EffortLog;
@@ -15,6 +16,11 @@ public class EffortController {
     public TextField deliverable;
     public TextField lifecycle;
     public TextField project;
+
+    @FXML
+    public void initialize() {
+
+    }
 
     public void generateLogs(ActionEvent actionEvent) {
         // In the real application we'd grep these from the db

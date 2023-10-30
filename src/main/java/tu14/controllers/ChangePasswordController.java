@@ -136,4 +136,7 @@ public class ChangePasswordController {
     }
 
 
+    public void back(ActionEvent actionEvent) {
+        MainApp.back();
+    }
 }

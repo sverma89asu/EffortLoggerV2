@@ -2,7 +2,7 @@ package tu14.api.request;
 
 import java.net.http.HttpRequest;
 
-public class GetRequest extends APIRequest {
+public final class GetRequest extends APIRequest {
     @Override
     public void includeRequestDataLayer(HttpRequest.Builder request) {
         if (body != null) {

@@ -16,10 +16,17 @@ public final class RawData<T extends IRawImplementer<T>> {
     private final Class<T> tClass;
     private Constructor<T> cachedConstructor;
 
+    /**
+     * Error message from the server, when there is one
+     */
     public final String errorMessage;
+
+    /**
+     * HTTP Status code
+     */
     public final int status;
 
-    public RawData(String errorMessage, int status) {
+    RawData(String errorMessage, int status) {
         data = null;
         tClass = null;
         cachedConstructor = null;
@@ -31,7 +38,7 @@ public final class RawData<T extends IRawImplementer<T>> {
         }
     }
 
-    public RawData(int status, JsonNode node, Class<T> tClass) {
+    RawData(int status, JsonNode node, Class<T> tClass) {
         this.status = status;
         this.errorMessage = "";
 
@@ -42,10 +49,16 @@ public final class RawData<T extends IRawImplementer<T>> {
         cachedConstructor = null;
     }
 
+    /**
+     * If the RawData response status is HTTP OK (200)
+     */
     public boolean ok() {
         return this.status == 200;
     }
 
+    /**
+     * Convert response data to IRawImplementer objects. Warns on error
+     */
     public List<T> castSafe() {
         if (!ok()) {
             System.err.println("Error " + status + " " + errorMessage);
@@ -60,6 +73,9 @@ public final class RawData<T extends IRawImplementer<T>> {
         }
     }
 
+    /**
+     * Convert response data to IRawImplementer objects.
+     */
     public List<T> cast() throws APITransformException {
         if (!ok()) {
             throw new APITransformException("Invalid RawData, not OK");
@@ -92,7 +108,11 @@ public final class RawData<T extends IRawImplementer<T>> {
         }
     }
 
-    // to make up for the removal of Optional<T>, so existing code should still work
+    /**
+     * To make up for the removal of Optional<T>, so existing code should still work.
+     * Should be removed from use where possible
+     */
+    @Deprecated
     public RawData<T> get() {
         return this;
     }

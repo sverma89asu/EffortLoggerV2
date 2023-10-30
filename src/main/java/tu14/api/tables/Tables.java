@@ -1,5 +1,8 @@
 package tu14.api.tables;
 
+/**
+ * Known Tables on the Server
+ */
 public class Tables {
 
     public static final String Users = "user";
