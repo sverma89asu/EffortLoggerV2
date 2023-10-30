@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="tu14.controllers.EffortController">
     <StackPane prefHeight="200.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0"
                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -22,12 +22,18 @@
             <HBox>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
                 <Button mnemonicParsing="false" text="Start Activity" prefWidth="200"
-                        disable="true"/>
+                        onAction="#checkValidInputsAndSubmit"/>
                 <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
-                <Button mnemonicParsing="false" text="Planning Poker" prefWidth="200"/>
+                <Button mnemonicParsing="false" text="Planning Poker" prefWidth="200"
+                        disable="true"/>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
             </HBox>
-            <Pane/>
+            <HBox>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+                <Label textFill="red" prefWidth="320" fx:id="activity_error_label"/>
+                <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+            </HBox>
             <HBox>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
                 <Label prefWidth="200" text="Project"/>
@@ -37,9 +43,9 @@
             </HBox>
             <HBox>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
-                <TextField fx:id="project" prefWidth="200" disable="true"/>
+                <TextField fx:id="project" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
-                <TextField fx:id="lifecycle" prefWidth="200" disable="true"/>
+                <TextField fx:id="lifecycle" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
             </HBox>
             <HBox>
@@ -51,9 +57,9 @@
             </HBox>
             <HBox>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
-                <TextField fx:id="effort_category" prefWidth="200" disable="true"/>
+                <TextField fx:id="effort_category" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
-                <TextField fx:id="deliverable" prefWidth="200" disable="true"/>
+                <TextField fx:id="deliverable" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
             </HBox>
             <Pane/>
@@ -64,7 +70,7 @@
                         onAction="#generateLogs"/>
                 <Button mnemonicParsing="false" text="${'Edit\nEffort Log'}" prefWidth="100"
                         wrapText="true"
-                        textAlignment="CENTER" disable="true"/>
+                        textAlignment="CENTER" onAction="#editLogs"/>
                 <Button mnemonicParsing="false" text="Defect Log Console" prefWidth="100"
                         wrapText="true"
                         textAlignment="CENTER" disable="true"/>

@@ -1,3 +1,7 @@
+package tu14.logs;
+
+import tu14.input.ValidateInput;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,39 +10,34 @@ public class LogOfLogs {
 		Scanner scan;
 		boolean isValid;
 		boolean changeMade = false;
-		String time1 = "00:00:00";
-		String time2 = "00:00:00";
-		
-		isValid = true;
+		String time1;
+		String time2;
+
 		scan = new Scanner(System.in);
 		int logNumber = -1;
+
+		if (CurrentLogs.size() == 0) return;
+
 		do {
 			System.out.println("Which Log Number do you want to change? Choose 1-" + CurrentLogs.size());
 			try {
-				isValid = true;
 				logNumber = scan.nextInt() - 1;
 				scan.nextLine();
 			}
 			catch(Exception e) {
 				scan.nextLine();
-				isValid = false;
 			}
 		} while (logNumber < 0 || logNumber > CurrentLogs.size());
-		
-		isValid = true; // check if the option given is valid (0-7)
-		int line = -1; // begin line at -1 so it doesn't go to any switch statement
-		String answer = "";
+
+		LogType backup = new LogType(CurrentLogs.get(logNumber));
+
+		int line; // begin line at -1 so it doesn't go to any switch statement
+		String answer;
 		do {
 			// Output options they can use
 			System.out.println("Which change would you like to make?\nEnter the number:");
-			System.out.print("0. Quit\n"
-					+ "1. Date\n"
-					+ "2. Start Time\n"
-					+ "3. End Time\n"
-					+ "4. Life Cycle Step\n"
-					+ "5. Effort Category\n"
-					+ "6. Deliverable\n"
-					+ "7. Print Options again\n");
+			System.out.print("0. Quit\n1. Date\n2. Start Time\n3. End Time\n4. Life Cycle Step\n5." +
+									 " Effort Category\n6. Deliverable\n7. Print Options again\n");
 			try {
 				isValid = true;
 				line = scan.nextInt(); 
@@ -46,7 +45,7 @@ public class LogOfLogs {
 			}
 			// Catch any options that aren't 0-7 
 			catch(Exception e) { 
-				scan.nextLine(); // Flush out scanner
+//				scan.nextLine(); // Flush out scanner
 				line = -1;
 				isValid = false;
 			}
@@ -116,14 +115,16 @@ public class LogOfLogs {
 					
 				case 7: 
 					System.out.println("Which change would you like to make?\nEnter the number:");
-					System.out.print("0. Quit\n"
-							+ "1. Date\n"
-							+ "2. Start Time\n"
-							+ "3. End Time\n"
-							+ "4. Life Cycle Step\n"
-							+ "5. Effort Category\n"
-							+ "6. Deliverable\n"
-							+ "?. Print Options again\n");
+					System.out.print("""
+											 0. Quit
+											 1. Date
+											 2. Start Time
+											 3. End Time
+											 4. Life Cycle Step
+											 5. Effort Category
+											 6. Deliverable
+											 ?. Print Options again
+											 """);
 					break;
 				default:
 					if (line != 0) {
@@ -131,14 +132,13 @@ public class LogOfLogs {
 					}
 					break;
 				}
-				if (isValid == true && line != 0) {
+				if (isValid && line != 0) {
 					System.out.println("Change made! Next change?");
 					changeMade = true;
 				}
 		} while (line != 0);
-		if (changeMade == true) {
-			OldLogs.add(CurrentLogs.get(logNumber));
+		if (changeMade) {
+			OldLogs.add(backup);
 		}
-		scan.close();		
 	}
 }

@@ -2,15 +2,21 @@ package tu14.logs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sun.scenario.effect.Offset;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import tu14.api.IRawImplementer;
-import tu14.api.exceptions.APITransformException;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoField;
+import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EffortLog implements IRawImplementer<EffortLog> {
 
@@ -58,6 +64,55 @@ public class EffortLog implements IRawImplementer<EffortLog> {
         this.id = data.get("id").asInt();
 
         return this;
+    }
+
+
+    public static EffortLog constructRandom() {
+        Random gen = ThreadLocalRandom.current();
+        long now = Instant.now().toEpochMilli() / 1000;
+
+        Instant start = Instant.ofEpochSecond(gen.nextLong(0, now));
+
+        EffortLog log = new EffortLog(start,
+                      Instant.ofEpochSecond(gen.nextLong(start.getEpochSecond(), now)),
+                      "Random " + gen.nextInt(0, 100),
+                      "Random " + gen.nextInt(0, 100),
+                      "Random " + gen.nextInt(0, 100));
+
+        log.id = gen.nextInt(0, 1000);
+
+        return log;
+    }
+
+    public static EffortLog transform(LogType log) {
+        Instant start = Instant.parse(log.getDate() + "T" + log.getStartTime() + "Z");
+        Instant end = Instant.parse(log.getDate() + "T" + log.getEndTime() + "Z");
+
+        EffortLog data = new EffortLog(start, end, log.getLifeCycleStep(),
+                                       log.getEffortCategory(), log.getDeliverable());
+        data.id = log.getLogNumber();
+
+        return data;
+    }
+
+    public static LogType transform(EffortLog log) {
+        OffsetDateTime _start = log.start.atOffset(ZoneOffset.UTC);
+
+        String date = String.format("%04d-%02d-%02d",
+                                    _start.getYear(),
+                                    _start.getMonth().getValue(),
+                                    _start.getDayOfMonth());
+
+        String start = String.format("%02d:%02d:%02d", _start.get(ChronoField.HOUR_OF_DAY),
+                                     _start.get(ChronoField.MINUTE_OF_HOUR),
+                                     _start.get(ChronoField.SECOND_OF_MINUTE));
+
+        String end = String.format("%02d:%02d:%02d", _start.get(ChronoField.HOUR_OF_DAY),
+                                   _start.get(ChronoField.MINUTE_OF_HOUR),
+                                   _start.get(ChronoField.SECOND_OF_MINUTE));
+
+        return new LogType(log.id, date, start, end, log.lifeCycle, log.effortCategory,
+                           log.deliverable);
     }
 
     private void recalculateDuration() {

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ public class MainApp extends Application {
 
     private static UserData user;
     private static ObservableList<EffortLog> logs;
+    private static ObservableList<EffortLog> edited;
 
     public static UserData getUser() {
         return user;
@@ -30,12 +32,17 @@ public class MainApp extends Application {
         return logs;
     }
 
+    public static ObservableList<EffortLog> getEdited() {
+        return edited;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
         // setup services and singletons
         user = new UserData();
         logs = FXCollections.observableArrayList();
+        edited = FXCollections.observableArrayList();
 
         Platform.setImplicitExit(true);
 
