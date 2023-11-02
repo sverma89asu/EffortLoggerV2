@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="RiskReduction-Prototype" />
+        <module name="EffortLoggerV2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

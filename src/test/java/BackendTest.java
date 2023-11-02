@@ -1,28 +1,22 @@
-import api.Backend;
-import api.PlaintextBearerAuthentication;
-import api.exceptions.APITransformException;
-import api.request.CreateRequest;
-import api.request.DeleteRequest;
-import api.request.GetRequest;
-import api.request.UpdateRequest;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
+import tu14.api.Backend;
+import tu14.api.exceptions.APITransformException;
+import tu14.api.request.CreateRequest;
+import tu14.api.request.DeleteRequest;
+import tu14.api.request.GetRequest;
+import tu14.api.request.UpdateRequest;
+import tu14.api.tables.Tables;
 
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BackendTest {
 
-    boolean failed = true;
-
     static int id;
+    static int count;
 
     @BeforeAll
     void build() {
@@ -30,65 +24,65 @@ public class BackendTest {
     }
 
     @Test
-    void TestComplete() throws ExecutionException, InterruptedException, APITransformException {
+    @Order(0)
+    void TestGet() throws ExecutionException, InterruptedException, APITransformException {
+        List<User> users =
+                Backend.getInstance().send(new GetRequest().table(Tables.Users), User.class).get().cast();
 
-        Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
+        for (User user : users) {
+            System.out.println(user.toString());
+        }
 
+        count = users.size();
+    }
+
+    @Test
+    @Order(1)
+    void TestCreate() throws ExecutionException, InterruptedException {
         User us = new User("test" + id, "pwd");
 
-        List<User> users = backend.send(new GetRequest().table("user"), User.class).get().cast();
+        Backend.getInstance()
+                .send(new CreateRequest().table(Tables.Users).id(id).body(us), User.class)
+                .get().castSafe();
 
-        for (User user : users) {
-            System.out.println(user.toString());
-            assertFalse(id == user.id);
-        }
+        List<User> users =
+                Backend.getInstance().send(new GetRequest().table(Tables.Users), User.class).get().castSafe();
 
-        int count = users.size();
-        System.out.println(count);
+        Assertions.assertEquals(count + 1, users.size());
+    }
 
-        backend.send(new CreateRequest().table("user").id(id).body(us), User.class).get().castSafe();
+    @Test
+    @Order(2)
+    void TestUpdate() throws ExecutionException, InterruptedException, APITransformException {
+        User user = Backend.getInstance()
+                .send(new GetRequest().table(Tables.Users).id(id), User.class).get().castSafe().get(0);
 
-        users = backend.send(new GetRequest().table("user"), User.class).get().cast();
+        user.setPassword("H");
 
-        for (User user : users) {
-            System.out.println(user.toString());
-        }
+        Backend.getInstance()
+                .send(new UpdateRequest().table(Tables.Users).id(id).body(user), User.class).get().cast();
 
-        assertEquals(count + 1, users.size());
+        user = Backend.getInstance()
+                .send(new GetRequest().table(Tables.Users).id(id), User.class).get().castSafe().get(0);
 
-        us.setPassword("H");
+        Assertions.assertEquals("H", user.password);
+    }
 
-        backend.send(new UpdateRequest().table("user").id(id).body(us), User.class).get().castSafe();
+    @Test
+    @Order(3)
+    void TestDelete() throws ExecutionException, InterruptedException, APITransformException {
+        Backend.getInstance().send(new DeleteRequest().table(Tables.Users).id(id), User.class).get().cast();
 
-        users = backend.send(new GetRequest().table("user"), User.class).get().cast();
+        List<User> users = Backend.getInstance()
+                .send(new GetRequest().table(Tables.Users), User.class).get().castSafe();
 
-        for (User user : users) {
-            System.out.println(user.toString());
-        }
-
-        User theOne = users.stream().filter((u) -> u.id == id).findFirst().get();
-
-        assertEquals("H", theOne.password);
-
-        backend.send(new DeleteRequest().table("user").id(id), User.class).get().castSafe();
-
-        users = backend.send(new GetRequest().table("user"), User.class).get().cast();
-
-        for (User user : users) {
-            System.out.println(user.toString());
-        }
-
-        assertEquals(count, users.size());
-
-        failed = false;
+        Assertions.assertEquals(count, users.size());
     }
 
     @AfterAll
     void tearDown() {
-        if (failed) {
-            Backend backend = new Backend(new PlaintextBearerAuthentication("dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"));
-            backend.send(new DeleteRequest().table("user").id(id), User.class);
-        }
+        Backend backend = Backend.getInstance();
+        backend.send(new DeleteRequest().table(Tables.Users).id(id), User.class);
     }
 
 
