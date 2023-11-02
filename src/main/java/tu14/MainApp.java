@@ -51,7 +51,7 @@ public class MainApp extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("index.fxml")));
         Scene rootScene = new Scene(root, stage.getMaxWidth() / 2, stage.getMaxHeight() / 2);
 
-        stage.setTitle("Effort Logger V2");
+        stage.setTitle("Effort Logger V3");
         stage.setScene(rootScene);
         stage.show();
     }

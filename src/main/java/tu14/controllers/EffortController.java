@@ -49,6 +49,10 @@ public class EffortController {
         MainApp.getLogs().clear();
         MainApp.getLogs().addAll(logs.stream().map(EffortLog::transform).toList());
         MainApp.getEdited().addAll(edited.stream().map(EffortLog::transform).toList());
+
+        for (EffortLog log : MainApp.getEdited()) {
+            System.out.println(EffortLog.transform(log));
+        }
     }
 
     public void checkValidInputsAndSubmit(ActionEvent actionEvent) {

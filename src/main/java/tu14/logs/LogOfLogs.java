@@ -115,16 +115,14 @@ public class LogOfLogs {
 					
 				case 7: 
 					System.out.println("Which change would you like to make?\nEnter the number:");
-					System.out.print("""
-											 0. Quit
-											 1. Date
-											 2. Start Time
-											 3. End Time
-											 4. Life Cycle Step
-											 5. Effort Category
-											 6. Deliverable
-											 ?. Print Options again
-											 """);
+					System.out.print("0. Quit\n"
+							+ "1. Date\n"
+							+ "2. Start Time\n"
+							+ "3. End Time\n"
+							+ "4. Life Cycle Step\n"
+							+ "5. Effort Category\n"
+							+ "6. Deliverable\n"
+							+ "?. Print Options again\n");
 					break;
 				default:
 					if (line != 0) {
