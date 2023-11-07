@@ -3,14 +3,12 @@ package tu14.controllers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import tu14.MainApp;
-import tu14.logs.EffortLog;
+import tu14.types.EffortLog;
 
-import java.time.Instant;
 public class ViewLogsController {
 
     public TableColumn<EffortLog, Integer> idCol;
