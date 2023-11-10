@@ -36,8 +36,16 @@ public class LogOfLogs {
 		do {
 			// Output options they can use
 			System.out.println("Which change would you like to make?\nEnter the number:");
-			System.out.print("0. Quit\n1. Date\n2. Start Time\n3. End Time\n4. Life Cycle Step\n5." +
-									 " Effort Category\n6. Deliverable\n7. Print Options again\n");
+			System.out.print("""
+                                     0. Quit
+                                     1. Date
+                                     2. Start Time
+                                     3. End Time
+                                     4. Life Cycle Step
+                                     5. Effort Category
+                                     6. Deliverable
+                                     7. Print Options again
+                                     """);
 			try {
 				isValid = true;
 				line = scan.nextInt(); 
@@ -80,6 +88,7 @@ public class LogOfLogs {
 						System.out.println("Invalid format for time, try again!");
 						answer = scan.nextLine();
 					}
+
 					String newEndTime = answer;
 					CurrentLogs.get(logNumber).setEndTime(newEndTime);
 					time2 = newEndTime;
@@ -116,15 +125,15 @@ public class LogOfLogs {
 				case 7: 
 					System.out.println("Which change would you like to make?\nEnter the number:");
 					System.out.print("""
-											 0. Quit
-											 1. Date
-											 2. Start Time
-											 3. End Time
-											 4. Life Cycle Step
-											 5. Effort Category
-											 6. Deliverable
-											 ?. Print Options again
-											 """);
+												0. Quit
+												1. Date
+												2. Start Time
+												3. End Time
+												4. Life Cycle Step
+												5. Effort Category
+												6. Deliverable
+												?. Print Options again
+												""");
 					break;
 				default:
 					if (line != 0) {

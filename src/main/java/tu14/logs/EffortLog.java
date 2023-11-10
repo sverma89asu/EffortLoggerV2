@@ -132,7 +132,7 @@ public class EffortLog implements IRawImplementer<EffortLog> {
         return start;
     }
 
-    public void setStart(Instant start) {
+    public void setStat(Instant start) {
         this.start = start;
         recalculateDuration();
     }

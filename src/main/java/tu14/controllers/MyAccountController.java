@@ -20,14 +20,15 @@ public class MyAccountController {
 
     // this code will run after change password button is click on my account page
     public void changePassword(ActionEvent event) {
-        MainApp.go("changepassword.fxml");
+
+//        MainApp.go("changepassword.fxml");
     }
 
     public void logout(ActionEvent event) {
-        MainApp.go("index.fxml");
+//        MainApp.go("index.fxml");
     }
 
     public void toDashboard(ActionEvent actionEvent) {
-        MainApp.go("effort.fxml");
+//        MainApp.go("effort.fxml");
     }
 }

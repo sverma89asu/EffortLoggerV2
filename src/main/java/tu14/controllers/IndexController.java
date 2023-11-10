@@ -71,7 +71,7 @@ public class IndexController {
                         progress_bar.setProgress(0);
                     });
 
-                    MainApp.go("myaccount.fxml");
+//                    MainApp.go("myaccount.fxml");
                     return;
                 }
             }

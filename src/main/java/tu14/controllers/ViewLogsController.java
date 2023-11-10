@@ -35,6 +35,7 @@ public class ViewLogsController {
     }
 
     public void back(ActionEvent actionEvent) {
-        MainApp.back();
+
+//        MainApp.back();
     }
 }

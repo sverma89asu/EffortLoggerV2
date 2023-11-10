@@ -11,6 +11,7 @@ import tu14.MainApp;
 import tu14.api.Backend;
 import tu14.api.PlaintextBearerAuthentication;
 import tu14.api.RawData;
+import tu14.api.request.DeleteRequest;
 import tu14.api.request.UpdateRequest;
 import tu14.user.RawUserData;
 
@@ -122,7 +123,7 @@ public class ChangePasswordController {
                                     .body(new RawUserData(MainApp.getUser(), newPassword)), null).get();
 
                     if (data.ok()) {
-                        MainApp.back();
+//                        MainApp.back();
                     } else {
                         System.out.println(data.errorMessage);
                         warningText.setText("Password could not be changed, please try again");
@@ -137,6 +138,7 @@ public class ChangePasswordController {
 
 
     public void back(ActionEvent actionEvent) {
-        MainApp.back();
+
+//        MainApp.back();
     }
 }

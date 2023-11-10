@@ -2,6 +2,7 @@ package tu14.logs;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Date;
 
 public class LogType {
 	private int logNumber;
@@ -12,7 +13,7 @@ public class LogType {
 	private String lifeCycleStep;
 	private String effortCategory;
 	private String deliverable;
-	
+
 	public LogType(int logNumber, String date, String startTime, String endTime, String lifeCycleStep, String effortCategory, String deliverable) {
 		this.logNumber = logNumber;
 		this.date = date;

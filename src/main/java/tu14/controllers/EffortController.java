@@ -34,7 +34,7 @@ public class EffortController {
     }
 
     public void viewLogs(ActionEvent actionEvent) {
-        MainApp.go("viewlogs.fxml");
+//        MainApp.go("viewlogs.fxml");
     }
 
     public void editLogs(ActionEvent actionEvent) {
