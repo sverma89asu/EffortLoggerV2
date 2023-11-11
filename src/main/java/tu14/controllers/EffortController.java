@@ -171,7 +171,13 @@ public class EffortController {
                 try {
                     RawData<?> data = Backend.getInstance().send(
                             new CreateRequest().table("effortLog")
-                                    .body(new tu14.model.EffortLog(-1, startTime, endTime, selectedLifeCycle.getId(), selectedEffortCategory.getId(), selectedDeliverable.getId(), selectedProject.getId())), null).get();
+                                    .body(new tu14.model.EffortLog(0, startTime, endTime, selectedLifeCycle.getId(), selectedEffortCategory.getId(), selectedDeliverable.getId(), selectedProject.getId())), null).get();
+                    if (data.ok()) {
+                        clockStatus.setText("");
+                    } else {
+                        System.out.println(data.errorMessage);
+                        activity_error_label.setText("The effort log could not be saved");
+                    }
                 } catch (InterruptedException | ExecutionException e) {
                     throw new RuntimeException(e);
                 }
