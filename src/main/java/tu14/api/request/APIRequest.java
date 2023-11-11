@@ -1,5 +1,6 @@
 package tu14.api.request;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import tu14.api.IRawImplementer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,8 +17,12 @@ public abstract sealed class APIRequest permits CreateRequest, DeleteRequest, Ge
     private static final ObjectMapper mapper = new ObjectMapper();
 
     static {
+        mapper.registerModule(new JavaTimeModule());
+
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+//        mapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
+        mapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 
     protected long id = -1;
@@ -48,7 +53,7 @@ public abstract sealed class APIRequest permits CreateRequest, DeleteRequest, Ge
      * on Gets and Deletes
      */
     public APIRequest body(IRawImplementer<?> implementer) {
-        mapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+
         try {
             body = mapper.writeValueAsString(implementer);
         } catch (JsonProcessingException e) {
