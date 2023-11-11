@@ -20,7 +20,7 @@ public abstract sealed class APIRequest permits CreateRequest, DeleteRequest, Ge
         mapper.registerModule(new JavaTimeModule());
 
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        mapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//        mapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.setVisibility(PropertyAccessor.FIELD, Visibility.PROTECTED_AND_PUBLIC);
         mapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
