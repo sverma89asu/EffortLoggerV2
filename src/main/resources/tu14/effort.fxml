@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="tu14.controllers.EffortController">
     <StackPane prefHeight="200.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0"
@@ -19,9 +20,10 @@
                 </font>
             </Label>
             <Pane/>
+            <Text fx:id="clockStatus"/>
             <HBox>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
-                <Button mnemonicParsing="false" text="Start Activity" prefWidth="200"
+                <Button fx:id="startActivity" mnemonicParsing="false" text="Start Activity" prefWidth="200"
                         onAction="#checkValidInputsAndSubmit"/>
                 <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
                 <Button mnemonicParsing="false" text="Planning Poker" prefWidth="200"
@@ -43,9 +45,9 @@
             </HBox>
             <HBox>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
-                <TextField fx:id="project" prefWidth="200" />
+                <ComboBox fx:id="project" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
-                <TextField fx:id="lifecycle" prefWidth="200" />
+                <ComboBox fx:id="lifecycle" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
             </HBox>
             <HBox>
@@ -57,9 +59,9 @@
             </HBox>
             <HBox>
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
-                <TextField fx:id="effort_category" prefWidth="200" />
+                <ComboBox fx:id="effort_category" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
-                <TextField fx:id="deliverable" prefWidth="200" />
+                <ComboBox fx:id="deliverable" prefWidth="200" />
                 <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
             </HBox>
             <Pane/>
