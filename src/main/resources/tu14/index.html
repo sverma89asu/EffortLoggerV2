@@ -20,6 +20,13 @@
 
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/32e87beb19.js"></script>
     <script defer src="https://unpkg.com/petite-vue@0.2.2/dist/petite-vue.iife.js"></script>
+
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css"
+          rel="stylesheet">
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_semanticui.min.css"
+          rel="stylesheet">
+    <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"
+            type="text/javascript"></script>
     <script defer src="index.js"></script>
 </head>
 <body id="main" style="height: 100%; margin: 0; padding: 0; ">
@@ -89,7 +96,7 @@
                 </button>
                 <button
                         class="rounded-md border p-2 bg-blue-300 active:bg-blue-200 hover:bg-blue-200 !outline-none focus:ring-2 ring-inset ring-blue-500 w-96"
-                        type="button" onclick="to('effort')">View Logs
+                        onclick="to('effort')" type="button">View Logs
                 </button>
                 <select
                         class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
@@ -115,7 +122,7 @@
             <div class="grid grid-cols-4 max-w-4xl mt-4">
                 <button
                         class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 col-start-4"
-                        type="button" onclick="to('home')">Back
+                        onclick="to('home')" type="button">Back
                 </button>
             </div>
         </div>
@@ -131,7 +138,7 @@
                 </button>
                 <button
                         class="rounded-md border p-2 bg-blue-300 active:bg-blue-200 hover:bg-blue-200 !outline-none focus:ring-2 ring-inset ring-blue-500 w-96"
-                        type="button" onclick="to('defect')">View Logs
+                        onclick="to('defect')" type="button">View Logs
                 </button>
                 <select
                         class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
@@ -167,7 +174,7 @@
             <div class="grid grid-cols-4 max-w-4xl mt-4">
                 <button
                         class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 col-start-4"
-                        type="button" onclick="to('home')">Back
+                        onclick="to('home')" type="button">Back
                 </button>
             </div>
         </div>
@@ -175,8 +182,30 @@
     <div data-page="poker-console"></div>
     <div data-page="project-console"></div>
     <div data-page="poker"></div>
-    <div data-page="effort"></div>
-    <div data-page="defect"></div>
+    <div data-page="effort">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div id="effort-table" class="flex-1"></div>
+            <div class="flex flex-rows items-end m-4">
+                <button
+                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        onclick="to('effort-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="defect">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div id="defect-table" class="flex-1"></div>
+            <div class="flex flex-rows items-end m-4">
+                <button
+                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        onclick="to('defect-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
     <div data-page="project"></div>
 </div>
 
