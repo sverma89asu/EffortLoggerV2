@@ -179,14 +179,37 @@
             </div>
         </div>
     </div>
-    <div data-page="poker-console"></div>
+    <div data-page="poker-console" class="flex flex-row items-center justify-center">
+        <div>
+            <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
+                   id="poker-session-code"
+                   placeholder="Planning Poker Session Code"
+                   type="text">
+            <div class="flex flex-rows items-center gap-4">
+                <button
+                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96 flex-1"
+                        type="button">Join Session
+                </button>
+                <button
+                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96 flex-1"
+                        type="button">Start Session
+                </button>
+            </div>
+            <div class="flex flex-rows justify-end mt-4">
+                <button
+                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        onclick="to('home')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
     <div data-page="project-console"></div>
     <div data-page="poker"></div>
     <div data-page="effort">
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div id="effort-table" class="flex-1"></div>
-            <div class="flex flex-rows items-end m-4">
+            <div class="flex flex-rows justify-end m-4">
                 <button
                         class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
                         onclick="to('effort-console')" type="button">Back
@@ -195,10 +218,10 @@
         </div>
     </div>
     <div data-page="defect">
-        <div>
+        <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div id="defect-table" class="flex-1"></div>
-            <div class="flex flex-rows items-end m-4">
+            <div class="flex flex-rows justify-end m-4">
                 <button
                         class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
                         onclick="to('defect-console')" type="button">Back
