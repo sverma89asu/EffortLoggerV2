@@ -107,10 +107,12 @@ makeRequest("project").then(async (req) => {
 
     const defectSelect = document.querySelector("#defect-select-project");
     const effortSelect = document.querySelector("#effort-select-project");
+    const storySelect = document.querySelector("#story-select-project");
 
     for (const opt of json) {
         defectSelect.appendChild(makeOption(opt));
         effortSelect.appendChild(makeOption(opt));
+        storySelect.appendChild(makeOption(opt));
         projects.push(opt);
     }
 });
@@ -583,6 +585,35 @@ async function createProject() {
 
     if (data.ok) {
         toast("Created project with ID " + (await data.json()).id, "success");
+    } else {
+        toast("Unknown Error", "error");
+    }
+
+}
+
+const storyNameSelect = document.querySelector("#story-name");
+const storyDescriptionInput= document.querySelector("#story-description");
+const storyProjectSelect = document.querySelector("#story-select-project");
+
+async function createStory() {
+    const name = storyNameSelect.value;
+    const description = storyDescriptionInput.value;
+    const project = parseInt(storyProjectSelect.value);
+
+    if (name.trim() === "" || Number.isNaN(project)) {
+        toast("Invalid input", "error");
+        return;
+    }
+
+    const data = await fetch("https://cse360.flerp.dev/tables/userstory", {
+        method: "PUT", headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5",
+        }, body: JSON.stringify({name, description, project})
+    });
+
+    if (data.ok) {
+        toast("Created project with ID " + (await data.json())[0].id, "success");
     } else {
         toast("Unknown Error", "error");
     }

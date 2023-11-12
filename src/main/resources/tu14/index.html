@@ -242,7 +242,7 @@
                 </button>
                 <button
                         class="button-sky w-96"
-                        type="button" onclick="to('user-stories')">User Stories
+                        type="button" onclick="to('new-story')">User Stories
                 </button>
                 <button
                         class="button-sky w-full"
@@ -319,6 +319,7 @@
     </div>
     <div class="flex flex-row items-center justify-center" data-page="new-project">
         <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
                    id="project-name"
                    placeholder="Project Name"
@@ -356,7 +357,7 @@
                 </button>
                 <button
                         class="button-slate w-48"
-                        onclick="to('project-console')" type="button">Back
+                        onclick="to('new-story')" type="button">Back
                 </button>
             </div>
         </div>
@@ -422,6 +423,42 @@
                         type="button" onclick="saveGeneric('lifecycle')">
                     Save
                 </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row items-center justify-center" data-page="new-story">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="grid w-full grid-cols-2 gap-4 mb-4">
+                <input class="rounded-md bg-gray-100 border-gray-300 border"
+                       id="story-name"
+                       placeholder="Title"
+                       type="text">
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="story-select-project">
+                    <option disabled selected>Select Project</option>
+                </select>
+                <!--TODO tags input -->
+            </div>
+            <textarea
+                    class="rounded-md bg-gray-100 border-gray-300 border min-h-36 w-full"
+                    placeholder="User Story" id="story-description"></textarea>
+            <div class="flex flex-rows items-center gap-4">
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="createStory()">Create User Story
+                </button>
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="to('user-stories')">User Stories List
+                </button>
+            </div>
+            <div class="flex flex-rows justify-end mt-4">
                 <button
                         class="button-slate w-48"
                         onclick="to('project-console')" type="button">Back
