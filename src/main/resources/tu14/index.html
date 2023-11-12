@@ -195,28 +195,80 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-row items-center justify-center" data-page="poker-console">
-        <div>
-            <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
-                   id="poker-session-code"
-                   placeholder="Planning Poker Session Name"
-                   type="text">
-            <div class="flex flex-rows items-center gap-4">
+    <div class="flex flex-col items-center justify-center" data-page="poker-console">
+        <h1 class="mb-2 font-semibold text-3xl text-center mb-8">Effort Logger V2</h1>
+        <div class="flex flex-row items-center justify-around gap-12">
+            <div class="grid grid-rows-3 gap-4 items-stretch">
+                <input class="rounded-md bg-gray-100 border-gray-300 border w-full"
+                       id="poker-session-code"
+                       placeholder="Session Name"
+                       type="text">
                 <button
                         class="button-sky w-96 flex-1"
-                        type="button">Join Session
+                        type="button" onclick="joinSession()">Join Session
                 </button>
+            </div>
+
+            <div class="flex flex-col items-stretch">
+                <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
+                       id="poker-create-session-code"
+                       placeholder="Session Name"
+                       type="text">
+                <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
+                       id="poker-create-story-id"
+                       placeholder="User Story ID"
+                       type="number">
                 <button
                         class="button-sky w-96 flex-1"
-                        type="button">Start Session
+                        type="button" onclick="createSession()">Create Session
                 </button>
             </div>
-            <div class="flex flex-rows justify-end mt-4">
+        </div>
+        <div class="fixed bottom-4 right-4 flex flex-rows justify-end">
+            <button
+                    class="button-slate w-48"
+                    onclick="to('home')" type="button">Back
+            </button>
+        </div>
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="poker-thing">
+        <h1 class="mb-2 font-semibold text-3xl text-center mb-8">Effort Logger V2</h1>
+        <div class="grid grid-rows-1 grid-cols-2 gap-4 items-stretch">
+            <div class="flex flex-col justify-stretch gap-2">
+                <div class="font-semibold" id="story-name"></div>
+                <div id="story-content"></div>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500" id="select-poker-points">
+                    <option selected disabled>Story Points</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="8">8</option>
+                    <option value="13">13</option>
+                    <option value="20">20</option>
+                    <option value="40">40</option>
+                    <option value="100">100</option>
+                </select>
+                <textarea
+                        class="rounded-md bg-gray-100 border-gray-300 border min-h-24 w-full"
+                        placeholder="Notes" id="poker-description"></textarea>
                 <button
-                        class="button-slate w-48"
-                        onclick="to('home')" type="button">Back
+                        class="button-sky flex-1"
+                        type="button" onclick="progressPlanningPoker(this)">Submit Points
                 </button>
             </div>
+
+            <div id="poker-feedback-container" class="row-span-5">
+
+            </div>
+        </div>
+        <div class="fixed bottom-4 right-4 flex flex-rows justify-end">
+            <button
+                    class="button-slate w-48"
+                    onclick="to('home'), rounds=0, pokerSubmitted=false" type="button">Back
+            </button>
         </div>
     </div>
     <div class="flex flex-col items-center justify-center" data-page="project-console">

@@ -24,8 +24,10 @@ C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\RawData.ja
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\services\DefectLogService.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\IAuthenticationService.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\model\EffortLog.java
+C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\services\PlanningPokerSessionService.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\tables\Tables.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\input\ValidateInput.java
+C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\model\PlanningPokerSession.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\data\IAnonymizableData.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\model\Deliverable.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\request\DeleteRequest.java

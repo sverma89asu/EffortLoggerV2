@@ -308,12 +308,8 @@ pages.addEventListener("routing:defect", async (event) => {
 })
 
 const projectTable = new Tabulator("#project-table", {
-    data: {},
-    layout: "fitColumns",
-    columns: [{title: "ID", field: "id"}, {
-        title: "Name",
-        field: "name",
-        editor: "input"
+    data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
+        title: "Name", field: "name", editor: "input"
     }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
 });
 
@@ -324,12 +320,8 @@ pages.addEventListener("routing:project", async (event) => {
 });
 
 const lifeCycleTable = new Tabulator("#lifecycle-table", {
-    data: {},
-    layout: "fitColumns",
-    columns: [{title: "ID", field: "id"}, {
-        title: "Name",
-        field: "name",
-        editor: "input"
+    data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
+        title: "Name", field: "name", editor: "input"
     }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
 });
 
@@ -340,12 +332,8 @@ pages.addEventListener("routing:lifecycle", async (event) => {
 });
 
 const userStoriesTable = new Tabulator("#user-stories-table", {
-    data: {},
-    layout: "fitColumns",
-    columns: [{title: "ID", field: "id"}, {
-        title: "Name",
-        field: "name",
-        editor: "input"
+    data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
+        title: "Name", field: "name", editor: "input"
     }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
 });
 
@@ -356,12 +344,8 @@ pages.addEventListener("routing:user-stories", async (event) => {
 });
 
 const deliverablesTable = new Tabulator("#deliverables-table", {
-    data: {},
-    layout: "fitColumns",
-    columns: [{title: "ID", field: "id"}, {
-        title: "Name",
-        field: "name",
-        editor: "input"
+    data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
+        title: "Name", field: "name", editor: "input"
     }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
 });
 
@@ -372,12 +356,8 @@ pages.addEventListener("routing:deliverables", async (event) => {
 });
 
 const effortCategoriesTable = new Tabulator("#effort-categories-table", {
-    data: {},
-    layout: "fitColumns",
-    columns: [{title: "ID", field: "id"}, {
-        title: "Name",
-        field: "name",
-        editor: "input"
+    data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
+        title: "Name", field: "name", editor: "input"
     }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
 });
 
@@ -388,12 +368,8 @@ pages.addEventListener("routing:effort-categories", async (event) => {
 });
 
 const defectCategoriesTable = new Tabulator("#defect-categories-table", {
-    data: {},
-    layout: "fitColumns",
-    columns: [{title: "ID", field: "id"}, {
-        title: "Name",
-        field: "name",
-        editor: "input"
+    data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
+        title: "Name", field: "name", editor: "input"
     }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
 });
 
@@ -424,7 +400,8 @@ function saveGeneric(tableName) {
         fetch("https://cse360.flerp.dev/tables/" + tableName, {
             method: "POST", headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5", "X-Data-ID": id.toString(),
+                Authorization: "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5",
+                "X-Data-ID": id.toString(),
             }, body: JSON.stringify(rest)
         });
     }
@@ -592,7 +569,7 @@ async function createProject() {
 }
 
 const storyNameSelect = document.querySelector("#story-name");
-const storyDescriptionInput= document.querySelector("#story-description");
+const storyDescriptionInput = document.querySelector("#story-description");
 const storyProjectSelect = document.querySelector("#story-select-project");
 
 async function createStory() {
@@ -620,4 +597,101 @@ async function createStory() {
 
 }
 
-const planningPokerNumbers = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
+async function loadStory() {
+    const id = service_PlanningPoker.storyId;
+    const story = (await (await makeRequest("userstory")).json()).filter(a => a.id === id)[0];
+
+    if (!story) {
+        toast("No known story with that ID", "error");
+        to("poker-console");
+    }
+
+    document.querySelector("#story-name").textContent = story.name;
+    document.querySelector("#story-content").textContent = story.description;
+}
+
+function joinSession() {
+    if (service_PlanningPoker.joinSession(document.querySelector("#poker-session-code").value)) {
+        to("poker-thing");
+        toast("Joined planning poker session " + service_PlanningPoker.sessionName);
+
+        loadStory();
+    } else {
+        toast("Unknown Error", "error");
+    }
+
+
+}
+
+function createSession() {
+
+    const storyId = parseInt(document.querySelector("#poker-create-story-id").value);
+    const name = document.querySelector("#poker-create-session-code").value;
+
+    if (Number.isNaN(storyId) || name.trim() === "") {
+        toast("Invalid input", "error");
+        return;
+    }
+
+    if (service_PlanningPoker.createSession(name, storyId)) {
+        to("poker-thing");
+        toast("Create planning poker session " + service_PlanningPoker.sessionName);
+
+        loadStory();
+    } else {
+        toast("Unknown Error", "error");
+    }
+}
+
+let pokerSubmitted = false;
+let rounds = 0;
+
+const pokerTable = new Tabulator("#poker-feedback-container", {
+    data: {}, layout: "fitColumns", columns: [{title: "Story Points", field: "points"}, {title: "Note", field: "note"}]
+})
+
+async function progressPlanningPoker(element) {
+    if (pokerSubmitted) {
+        const data = (await (await makeRequest("planningpokerround")).json()).filter(item => item.round === rounds && item.pokerId === service_PlanningPoker.getPokerId());
+
+        pokerTable.setData(data);
+        rounds++;
+        pokerSubmitted = false;
+
+        element.classList.toggle("button-emerald", false);
+        element.classList.toggle("button-sky", true);
+        element.textContent = "Submit Points";
+    } else {
+        const note = document.querySelector("#poker-description").value;
+        const points = parseInt(document.querySelector("#select-poker-points").value);
+
+        if (Number.isNaN(points)) {
+            toast("Invalid input", "error");
+            return;
+        }
+
+        app.log(JSON.stringify(service_PlanningPoker.getPokerId()));
+
+        fetch("https://cse360.flerp.dev/tables/planningpokerround", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5",
+            },
+            body: JSON.stringify({
+                note,
+                points,
+                round: rounds,
+                pokerId: service_PlanningPoker.getPokerId()
+            })
+        }).then(() => {
+            toast("Submitted Points", "success");
+        })
+
+        pokerSubmitted = true;
+
+        element.classList.toggle("button-sky", false);
+        element.classList.toggle("button-emerald", true);
+        element.textContent = "Receive Feedback";
+    }
+}

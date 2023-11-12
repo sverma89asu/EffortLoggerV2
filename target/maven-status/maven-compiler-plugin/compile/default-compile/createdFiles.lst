@@ -4,10 +4,12 @@ tu14\api\IAuthenticationService.class
 tu14\services\EffortLogService.class
 tu14\api\IRawImplementer.class
 tu14\data\encryption\EncryptedData.class
+tu14\model\PlanningPokerSession.class
 tu14\user\UserData.class
 tu14\user\RawUserData.class
 tu14\api\request\CreateRequest.class
 tu14\input\ValidateInput.class
+tu14\services\PlanningPokerSessionService.class
 tu14\api\exceptions\InvalidDatatypeException.class
 tu14\data\encryption\IEncryptableData.class
 tu14\api\request\UpdateRequest.class

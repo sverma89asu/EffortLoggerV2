@@ -9,6 +9,7 @@ import tu14.api.request.GetRequest;
 import tu14.api.tables.Tables;
 import tu14.services.DefectLogService;
 import tu14.services.EffortLogService;
+import tu14.services.PlanningPokerSessionService;
 import tu14.user.RawUserData;
 
 import java.util.Objects;
@@ -21,6 +22,8 @@ public class MainController {
 
     private final EffortLogService effortLogService = new EffortLogService();
     private final DefectLogService defectLogService = new DefectLogService();
+    private final PlanningPokerSessionService planningPokerSessionService =
+            new PlanningPokerSessionService();
 
     public void initialize() {
         webView.setContextMenuEnabled(false);
@@ -36,6 +39,7 @@ public class MainController {
             window.setMember("app", this);
             window.setMember("service_EffortLog", effortLogService);
             window.setMember("service_DefectLog", defectLogService);
+            window.setMember("service_PlanningPoker", planningPokerSessionService);
 
             System.out.println("Services loaded.");
         });
