@@ -20,6 +20,8 @@ public class MainController {
     public WebView webView;
 
     public void initialize() {
+        webView.setContextMenuEnabled(false);
+
         WebEngine engine = webView.getEngine();
         engine.load(Objects.requireNonNull(MainApp.class.getResource("index.html")).toExternalForm());
 
