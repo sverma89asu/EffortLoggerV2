@@ -18,10 +18,7 @@ const pages = document.querySelector("#pages");
 
 function to(_page) {
     for (const page of pages.children) {
-        if (page.getAttribute("data-page") === _page)
-            page.classList.toggle("hidden", false);
-        else
-            page.classList.toggle("hidden", true);
+        if (page.getAttribute("data-page") === _page) page.classList.toggle("hidden", false); else page.classList.toggle("hidden", true);
     }
 
     pages.dispatchEvent(new CustomEvent("routing:" + _page));
@@ -65,8 +62,7 @@ function toast(string, type) {
         position: "right",
         stopOnFocus: "true",
         style: {
-            background: col,
-            color: textCol
+            background: col, color: textCol
         }
     }).showToast();
 }
@@ -199,90 +195,120 @@ makeRequest("effortCategory").then(async (req) => {
 
 
 const effortTable = new Tabulator("#effort-table", {
-    data: {},
-    layout: "fitColumns",
-    columns: [
-        {title: "ID", field: "id"},
-        {
-            title: "Start Time", field: "start", formatter: "datetime", formatterParams: {
-                inputFormat: "iso",
-                outputFormat: "ff",
-                invalidPlaceholder: "(invalid date)",
+    data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
+        title: "Start Time", field: "start", formatter: "datetime", formatterParams: {
+            inputFormat: "iso", outputFormat: "ff", invalidPlaceholder: "(invalid date)",
+        }
+    }, {
+        title: "End Time", field: "end", formatter: "datetime", formatterParams: {
+            inputFormat: "iso", outputFormat: "ff", invalidPlaceholder: "(invalid date)"
+        }
+    }, {
+        title: "Life Cycle",
+        field: "lifeCycle",
+        editor: "list",
+        editorParams: {valuesLookup: () => lifecycles.map((a) => ({label: a.name, value: a.id}))},
+        formatter: (cell) => lifecycles.filter((a) => a.id === cell.getValue())[0].name
+    }, {
+        title: "Effort Category", field: "effortCategory", editor: "list", editorParams: {
+            valuesLookup: () => effortCategories.map((a) => ({
+                label: a.name, value: a.id
+            }))
+        }, formatter: (cell) => effortCategories.filter((a) => a.id === cell.getValue())[0].name
+    }, {
+        title: "Deliverable",
+        field: "deliverable",
+        editor: "list",
+        editorParams: {valuesLookup: () => deliverables.map((a) => ({label: a.name, value: a.id}))},
+        formatter: (cell) => deliverables.filter((a) => a.id === cell.getValue())[0].name
+    }, {
+        title: "Project",
+        field: "project",
+        editor: "list",
+        editorParams: {valuesLookup: () => projects.map((a) => ({label: a.name, value: a.id}))},
+        formatter: (cell) => projects.filter((a) => a.id === cell.getValue())[0].name
+    }, {
+        formatter: "buttonCross",
+        headerSort: false,
+        width: 40,
+        align: "center",
+        cellClick: (e, cell) => {
+            cell.getRow().delete();
+            if (service_EffortLog.deleteLog(cell.getRow().getData().id)) {
+                toast("Deleted log", "info");
+            } else {
+                toast("Unknown Error", "error");
             }
-        },
-        {
-            title: "End Time", field: "end", formatter: "datetime", formatterParams: {
-                inputFormat: "iso",
-                outputFormat: "ff",
-                invalidPlaceholder: "(invalid date)"
-            }
-        },
-        {
-            title: "Life Cycle",
-            field: "lifeCycle",
-            editor: "list",
-            editorParams: {valuesLookup: () => lifecycles.map((a) => ({label: a.name, value: a.id}))},
-            formatter: (cell) => lifecycles.filter((a) => a.id === cell.getValue())[0].name
-        },
-        {
-            title: "Effort Category",
-            field: "effortCategory",
-            editor: "list",
-            editorParams: {valuesLookup: () => effortCategories.map((a) => ({label: a.name, value: a.id}))},
-            formatter: (cell) => effortCategories.filter((a) => a.id === cell.getValue())[0].name
-        },
-        {
-            title: "Deliverable",
-            field: "deliverable",
-            editor: "list",
-            editorParams: {valuesLookup: () => deliverables.map((a) => ({label: a.name, value: a.id}))},
-            formatter: (cell) => deliverables.filter((a) => a.id === cell.getValue())[0].name
-        },
-        {
-            title: "Project",
-            field: "project",
-            editor: "list",
-            editorParams: {valuesLookup: () => projects.map((a) => ({label: a.name, value: a.id}))},
-            formatter: (cell) => projects.filter((a) => a.id === cell.getValue())[0].name
-        },
-        {
-            formatter: "buttonCross",
-            headerSort: false,
-            width: 40,
-            align: "center",
-            cellClick: (e, cell) => {
-                cell.getRow().delete();
-                if (service_EffortLog.deleteLog(cell.getRow().getData().id)) {
-                    toast("Deleted row", "info");
-                } else {
-                    toast("Unknown Error", "error");
-                }
-            }
-        },
-    ]
+        }
+    },]
 });
 
 pages.addEventListener("routing:effort", async (event) => {
     event.stopImmediatePropagation();
     const json = await (await makeRequest("effortLog")).json();
     effortTable.setData(json);
-})
+});
 
 const defectTable = new Tabulator("#defect-table", {
     height: "100%",
     data: {},
     layout: "fitColumns",
-    columns: [
-        {title: "ID", field: "id"},
-        {title: "Name", field: "name"},
-        {title: "Status", field: "status"},
-        {title: "Fix", field: "fix"},
-        {title: "Life Cycle Included", field: "lifeCycleIncluded"},
-        {title: "Life Cycle Excluded", field: "lifeCycleExcluded"},
-        {title: "Defect Category", field: "defectCategory"},
-        {title: "Project", field: "project"},
-    ]
+    columns: [{title: "ID", field: "id"}, {title: "Name", field: "name"}, {
+        title: "Description", field: "description", editor: "textarea", formatter: "textarea"
+    }, {
+        title: "Status",
+        field: "status",
+        editor: "list",
+        editorParams: {values: [{label: "Open", value: false}, {label: "Closed", value: true}]},
+        formatter: (cell) => cell.getValue() ? "Closed" : "Open",
+    }, {title: "Fix", field: "fix", editor: "textarea", formatter: "textarea"}, {
+        title: "Life Cycle Included",
+        field: "lifeCycleIncluded",
+        editor: "list",
+        editorParams: {valuesLookup: () => lifecycles.map((a) => ({label: a.name, value: a.id}))},
+        formatter: (cell) => lifecycles.filter((a) => a.id === cell.getValue())[0].name
+    }, {
+        title: "Life Cycle Excluded",
+        field: "lifeCycleExcluded",
+        editor: "list",
+        editorParams: {
+            clearable: true,
+            valuesLookup: () => lifecycles.map((a) => ({label: a.name, value: a.id}))
+        },
+        formatter: (cell) => lifecycles.filter((a) => a.id === cell.getValue())[0]?.name ?? ""
+    }, {
+        title: "Defect Category", field: "defectCategory", editor: "list", editorParams: {
+            valuesLookup: () => defectCategories.map(a => ({
+                label: a.name, value: a.id
+            }))
+        }, formatter: (cell) => defectCategories.filter((a) => a.id === cell.getValue())[0].name
+    }, {
+        title: "Project",
+        field: "project",
+        editor: "list",
+        editorParams: {valuesLookup: () => projects.map((a) => ({label: a.name, value: a.id}))},
+        formatter: (cell) => projects.filter((a) => a.id === cell.getValue())[0].name
+    }, {
+        formatter: "buttonCross",
+        headerSort: false,
+        width: 40,
+        align: "center",
+        cellClick: (e, cell) => {
+            cell.getRow().delete();
+            if (service_DefectLog.deleteLog(cell.getRow().getData().id)) {
+                toast("Deleted log", "info");
+            } else {
+                toast("Unknown Error", "error");
+            }
+        }
+    },]
 });
+
+pages.addEventListener("routing:defect", async (event) => {
+    event.stopImmediatePropagation();
+    const json = await (await makeRequest("defectlog")).json();
+    defectTable.setData(json);
+})
 
 const effortLogProjectSelect = document.querySelector("#effort-select-project");
 const effortLogLifeCycleSelect = document.querySelector("#effort-select-lifecycle");
@@ -355,6 +381,62 @@ function doEffortLog(element) {
         effortLogProjectSelect.disabled = true;
 
         toast("Started Clock", "info");
+    }
+}
+
+const defectLogProjectSelect = document.querySelector("#defect-select-project");
+const defectLogLifeCycleSelect = document.querySelector("#defect-select-lifecycle");
+const defectLogNameInput = document.querySelector("#defect-select-name");
+const defectLogCategorySelect = document.querySelector("#defect-select-category");
+const defectLogDescriptionInput = document.querySelector("#defect-select-description");
+
+function exportDefect() {
+    const code = service_DefectLog.exportDefectLogs();
+
+    switch (code) {
+        case 1:
+            toast("No logs to export", "info");
+            break;
+        case 2:
+            break;
+        case 3:
+            toast("That file already exists", "warning");
+            break;
+        case 0:
+            toast("Logs exported", "success");
+            break;
+        default:
+            toast("Unknown Error", "error");
+            break;
+
+    }
+}
+
+function saveDefect() {
+    const data = defectTable.getEditedCells().map((cell) => cell.getRow().getData());
+    if (service_DefectLog.saveDefectLogs(data, data.length)) {
+        toast("Saved Defect Logs", "success");
+    } else {
+        toast("Unknown Error", "error");
+    }
+}
+
+function doDefectLog() {
+    const project = parseInt(defectLogProjectSelect.value);
+    const lifecycle = parseInt(defectLogLifeCycleSelect.value);
+    const category = parseInt(defectLogCategorySelect.value);
+    const name = defectLogNameInput.value;
+    const description = defectLogDescriptionInput.value;
+
+    if (Number.isNaN(project + lifecycle + category) || name.trim() === "") {
+        toast("Invalid Selection", "error");
+        return;
+    }
+
+    if (service_DefectLog.createDefectLog(name, description, project, lifecycle, category)) {
+        toast("Created Defect Log", "success");
+    } else {
+        toast("Unknown Error", "error");
     }
 }
 

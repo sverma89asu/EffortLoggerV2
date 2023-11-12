@@ -1,6 +1,7 @@
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\IRawImplementer.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\request\CreateRequest.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\exceptions\InvalidDatatypeException.java
+C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\data\IExportableData.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\exceptions\APITransformException.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\model\DefectLog.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\model\EffortCategory.java
@@ -20,6 +21,7 @@ C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\PlaintextB
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\MainApp.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\Backend.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\RawData.java
+C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\services\DefectLogService.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\IAuthenticationService.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\model\EffortLog.java
 C:\Users\flerp\Documents\CSE360\EffortLoggerV2\src\main\java\tu14\api\tables\Tables.java

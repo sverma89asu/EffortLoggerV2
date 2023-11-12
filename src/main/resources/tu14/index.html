@@ -154,10 +154,10 @@
     <div class="flex flex-col items-center justify-center" data-page="defect-console">
         <div>
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
-            <div class="grid grid-rows-4 grid-cols-2 gap-4 max-w-4xl">
+            <div class="grid grid-rows-3 grid-cols-2 gap-4 max-w-4xl">
                 <button
                         class="button-sky w-96"
-                        type="button">Edit Defect Log
+                        type="button" onclick="doDefectLog(this)">Create Defect Log
                 </button>
                 <button
                         class="bg-blue-300 active:bg-blue-200 hover:bg-blue-200 ring-blue-500 w-96"
@@ -179,21 +179,13 @@
                         id="defect-select-category">
                     <option disabled selected>Select Defect Category</option>
                 </select>
-                <select
-                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
-                        id="defect-select-status">
-                    <option disabled selected>Select Status</option>
-                    <option value="true">Closed</option>
-                    <option value="false">Open</option>
-                </select>
                 <input class="rounded-md bg-gray-100 border-gray-300 border"
                        id="defect-select-name"
                        placeholder="Defect Name"
                        type="text">
-                <input class="rounded-md bg-gray-100 border-gray-300 border"
-                       id="defect-select-fix"
-                       placeholder="Fix Description"
-                       type="text">
+                <textarea
+                        class="rounded-md bg-gray-100 border-gray-300 border min-h-24 col-span-2"
+                placeholder="Description" id="defect-select-description"></textarea>
             </div>
             <div class="grid grid-cols-4 max-w-4xl mt-4">
                 <button
@@ -294,8 +286,12 @@
             <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
                         class="button-emerald w-48"
-                        type="button">
+                        type="button" onclick="saveDefect()">
                     Save
+                </button>
+                <button class="button-sky w-48" type="button"
+                        onclick="exportDefect()">
+                    Export
                 </button>
                 <button
                         class="button-slate w-48"

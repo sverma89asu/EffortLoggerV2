@@ -7,6 +7,7 @@ import tu14.MainApp;
 import tu14.api.Backend;
 import tu14.api.request.GetRequest;
 import tu14.api.tables.Tables;
+import tu14.services.DefectLogService;
 import tu14.services.EffortLogService;
 import tu14.user.RawUserData;
 
@@ -16,17 +17,23 @@ import java.util.concurrent.ExecutionException;
 public class MainController {
     public WebView webView;
 
+    private EffortLogService effortLogService = new EffortLogService();
+    private DefectLogService defectLogService = new DefectLogService();
+
     public void initialize() {
         webView.setContextMenuEnabled(false);
 
         WebEngine engine = webView.getEngine();
-        engine.load(Objects.requireNonNull(MainApp.class.getResource("index.html")).toExternalForm());
 
         engine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             JSObject window = (JSObject) engine.executeScript("window");
             window.setMember("app", this);
-            window.setMember("service_EffortLog", new EffortLogService());
+            window.setMember("service_EffortLog", effortLogService);
+            window.setMember("service_DefectLog", defectLogService);
         });
+
+        engine.load(Objects.requireNonNull(MainApp.class.getResource("index.html")).toExternalForm());
+
     }
 
     public void log(String string) {
@@ -49,7 +56,7 @@ public class MainController {
                         // set error message if we fail to progress pages
 
 
-    //                    MainApp.go("myaccount.fxml");
+                        //                    MainApp.go("myaccount.fxml");
                         return true;
                     }
                 }

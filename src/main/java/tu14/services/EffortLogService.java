@@ -121,9 +121,9 @@ public class EffortLogService {
             return -1;
         }
 
-        List<String> csv = new ArrayList<>(List.of(logs.get(0).getCSVHeader()));
+        List<String> csv = new ArrayList<>(List.of(logs.get(0).toCSVHeader()));
 
-        csv.addAll(logs.stream().map(EffortLog::getCSV).toList());
+        csv.addAll(logs.stream().map(EffortLog::toCSV).toList());
 
         try {
             Files.write(selectedFile.toPath(), csv, StandardCharsets.UTF_8);

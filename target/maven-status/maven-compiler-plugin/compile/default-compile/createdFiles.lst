@@ -15,8 +15,10 @@ tu14\api\PlaintextBearerAuthentication.class
 tu14\data\IAnonymizableData.class
 tu14\MainApp.class
 tu14\controllers\MainController.class
+tu14\data\IExportableData.class
 tu14\model\DefectCategory.class
 tu14\model\EffortCategory.class
+tu14\services\DefectLogService.class
 tu14\model\LifeCycle.class
 tu14\api\request\GetRequest.class
 tu14\model\DefectLog.class

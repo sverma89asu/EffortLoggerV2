@@ -14,15 +14,25 @@ public class DefectLog implements IRawImplementer<DefectLog>, IExportableData {
 
     public String name;
     public String description;
-    public String fix;
+    public String fix = "";
     public boolean status = false;
     public int lifeCycleIncluded;
-    public int lifeCycleExcluded;
+    public Integer lifeCycleExcluded = null;
     public int defectCategory;
     public int project;
 
 
     DefectLog() {}
+
+    public DefectLog(String name, String description, int project, int lifeCycleIncluded,
+               int defectCategory) {
+
+        this.name = name;
+        this.description = description;
+        this.project = project;
+        this.lifeCycleIncluded = lifeCycleIncluded;
+        this.defectCategory = defectCategory;
+    }
 
     @Override
     public DefectLog construct(JsonNode data) throws APITransformException {
@@ -38,13 +48,13 @@ public class DefectLog implements IRawImplementer<DefectLog>, IExportableData {
     }
 
     @Override
-    public String getCSVHeader() {
+    public String toCSVHeader() {
         return "id, name, description, fix, status, lifecycle included, lifecycle excluded, " +
                 "defect category, project";
     }
 
     @Override
-    public String getCSV() {
+    public String toCSV() {
         return String.format("%d, %s, %s, %s, %b, %d, %d, %d, %d", id,
                              StringEscapeUtils.escapeCsv(name),
                              StringEscapeUtils.escapeCsv(description),

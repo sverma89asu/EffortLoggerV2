@@ -70,12 +70,12 @@ public class EffortLog implements IRawImplementer<EffortLog>, IExportableData {
     }
 
     @Override
-    public String getCSVHeader() {
+    public String toCSVHeader() {
         return "id, start, end, life cycle, effort category, deliverable, project";
     }
 
     @Override
-    public String getCSV() {
+    public String toCSV() {
         return String.format("%d, %s, %s, %d, %d, %d, %d", id, start.toString(), end.toString(),
                              lifeCycle, effortCategory, deliverable, project);
     }
