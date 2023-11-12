@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en" style="height: 100%;">
 <head>
     <meta charset="UTF-8">
@@ -15,8 +16,28 @@
             div[data-page] {
                 @apply flex-1;
             }
+
+            button {
+                @apply rounded-md border p-2 !outline-none focus:ring-2 ring-inset
+            }
+
+            .button-slate {
+                @apply bg-slate-300 active:bg-slate-200 hover:bg-slate-200 ring-slate-500
+            }
+
+            .button-emerald {
+                @apply bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 ring-emerald-500
+            }
+
+            .button-sky {
+                @apply bg-sky-300 active:bg-sky-200 hover:bg-sky-200 ring-sky-500
+            }
         }
     </style>
+
+    <script src=" https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js "></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/32e87beb19.js"></script>
     <script defer src="https://unpkg.com/petite-vue@0.2.2/dist/petite-vue.iife.js"></script>
@@ -47,7 +68,7 @@
     </div>
 </template>
 
-<div class="w-full h-full flex flex-row items-stretch" id="pages">
+<div class="w-full h-full flex flex-row items-stretch p-8" id="pages">
     <div class="visible flex flex-col items-center justify-center" data-page="login">
         <h1 class="mb-2 font-semibold text-3xl">Effort Logger V2</h1>
         <input class="rounded-md bg-gray-100 border-gray-300 border mb-2 w-1/2 max-w-2xl "
@@ -66,22 +87,22 @@
          data-page="home">
         <div class=" grid grid-rows-5 gap-4 max-w-4xl">
             <h1 class="mb-2 font-semibold text-3xl text-center">Effort Logger V2</h1>
-            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+            <button class="button-sky w-96"
                     onclick="to('effort-console')" type="button">
                 Effort Logger
             </button>
-            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+            <button class="button-sky w-96"
                     onclick="to('defect-console')" type="button">
                 Defect Logger
             </button>
-            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+            <button class="button-sky w-96"
                     onclick="to('project-console')" type="button">Project Definitions</button>
-            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+            <button class="button-sky w-96"
                     onclick="to('poker-console')" type="button">
                 Planning Poker
             </button>
             <button
-                    class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-96"
+                    class="button-slate w-96"
                     onclick="to('login')" type="button">
                 Log Out
             </button>
@@ -93,11 +114,11 @@
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="grid grid-rows-3 grid-cols-2 gap-4 max-w-4xl">
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
-                        type="button">Start Activity
+                        class="button-sky w-96"
+                        onclick="doEffortLog(this)" type="button">Start Activity
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-blue-300 active:bg-blue-200 hover:bg-blue-200 !outline-none focus:ring-2 ring-inset ring-blue-500 w-96"
+                        class="bg-blue-300 active:bg-blue-200 hover:bg-blue-200 ring-blue-500 w-96"
                         onclick="to('effort')" type="button">View Logs
                 </button>
                 <select
@@ -123,7 +144,7 @@
             </div>
             <div class="grid grid-cols-4 max-w-4xl mt-4">
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 col-start-4"
+                        class="button-slate col-start-4"
                         onclick="to('home')" type="button">Back
                 </button>
             </div>
@@ -135,11 +156,11 @@
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="grid grid-rows-4 grid-cols-2 gap-4 max-w-4xl">
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                        class="button-sky w-96"
                         type="button">Edit Defect Log
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-blue-300 active:bg-blue-200 hover:bg-blue-200 !outline-none focus:ring-2 ring-inset ring-blue-500 w-96"
+                        class="bg-blue-300 active:bg-blue-200 hover:bg-blue-200 ring-blue-500 w-96"
                         onclick="to('defect')" type="button">View Logs
                 </button>
                 <select
@@ -176,7 +197,7 @@
             </div>
             <div class="grid grid-cols-4 max-w-4xl mt-4">
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 col-start-4"
+                        class="button-slate col-start-4"
                         onclick="to('home')" type="button">Back
                 </button>
             </div>
@@ -190,17 +211,17 @@
                    type="text">
             <div class="flex flex-rows items-center gap-4">
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96 flex-1"
+                        class="button-sky w-96 flex-1"
                         type="button">Join Session
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96 flex-1"
+                        class="button-sky w-96 flex-1"
                         type="button">Start Session
                 </button>
             </div>
             <div class="flex flex-rows justify-end mt-4">
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('home')" type="button">Back
                 </button>
             </div>
@@ -210,34 +231,35 @@
         <div>
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="grid grid-rows-3 grid-cols-2 gap-4 max-w-4xl">
+
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
-                        type="button" onclick="to('defect')">Defect Categories
-                </button>
-                <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                        class="button-sky w-96"
                         type="button" onclick="to('effort-categories')">Effort Categories
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                        class="button-sky w-96"
                         type="button" onclick="to('defect-categories')">Defect Categories
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                        class="button-sky w-96"
+                        type="button" onclick="to('lifecycle')">Life Cycle
+                </button>
+                <button
+                        class="button-sky w-96"
                         type="button" onclick="to('deliverables')">Deliverables
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                        class="button-sky w-96"
                         type="button" onclick="to('user-stories')">User Stories
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-full"
+                        class="button-sky w-full"
                         type="button" onclick="to('project')">Projects
                 </button>
             </div>
             <div class="flex flex-rows justify-end mt-4">
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('home')" type="button">Back
                 </button>
             </div>
@@ -248,15 +270,19 @@
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="flex-1" id="effort-table"></div>
-            <div class="flex flex-rows justify-end m-4 gap-4">
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
-                        class="rounded-md border p-2 bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 !outline-none focus:ring-2 ring-inset ring-emerald-500 w-48"
-                    type="button">
+                        class="button-emerald w-48"
+                    type="button" onclick="saveEffort()">
                     Save
                 </button>
+                <button class="button-sky w-48" type="button"
+                        onclick="exportEffort()">
+                    Export
+                </button>
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
-                        onclick="to('poker-console')" type="button">Back
+                        class="button-slate w-48"
+                        onclick="to('effort-console')" type="button">Back
                 </button>
             </div>
         </div>
@@ -265,14 +291,14 @@
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="flex-1" id="defect-table"></div>
-            <div class="flex flex-rows justify-end m-4 gap-4">
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
-                        class="rounded-md border p-2 bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 !outline-none focus:ring-2 ring-inset ring-emerald-500 w-48"
+                        class="button-emerald w-48"
                         type="button">
                     Save
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('defect-console')" type="button">Back
                 </button>
             </div>
@@ -282,14 +308,14 @@
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="flex-1" id="project-table"></div>
-            <div class="flex flex-rows justify-end m-4 gap-4">
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
-                        class="rounded-md border p-2 bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 !outline-none focus:ring-2 ring-inset ring-emerald-500 w-48"
+                        class="button-emerald w-48"
                         type="button">
                     Save
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('project-console')" type="button">Back
                 </button>
             </div>
@@ -299,14 +325,14 @@
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="flex-1" id="user-stories-table"></div>
-            <div class="flex flex-rows justify-end m-4 gap-4">
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
-                        class="rounded-md border p-2 bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 !outline-none focus:ring-2 ring-inset ring-emerald-500 w-48"
+                        class="button-emerald w-48"
                         type="button">
                     Save
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('project-console')" type="button">Back
                 </button>
             </div>
@@ -316,14 +342,14 @@
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="flex-1" id="deliverables-table"></div>
-            <div class="flex flex-rows justify-end m-4 gap-4">
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
-                        class="rounded-md border p-2 bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 !outline-none focus:ring-2 ring-inset ring-emerald-500 w-48"
+                        class="button-emerald w-48"
                         type="button">
                     Save
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('project-console')" type="button">Back
                 </button>
             </div>
@@ -333,14 +359,14 @@
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="flex-1" id="effort-categories-table"></div>
-            <div class="flex flex-rows justify-end m-4 gap-4">
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
-                        class="rounded-md border p-2 bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 !outline-none focus:ring-2 ring-inset ring-emerald-500 w-48"
+                        class="button-emerald w-48"
                         type="button">
                     Save
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('project-console')" type="button">Back
                 </button>
             </div>
@@ -350,14 +376,14 @@
         <div class="flex flex-col justify-stretch">
             <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
             <div class="flex-1" id="defect-categories-table"></div>
-            <div class="flex flex-rows justify-end m-4 gap-4">
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
-                        class="rounded-md border p-2 bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 !outline-none focus:ring-2 ring-inset ring-emerald-500 w-48"
+                        class="button-emerald w-48"
                         type="button">
                     Save
                 </button>
                 <button
-                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 w-48"
+                        class="button-slate w-48"
                         onclick="to('project-console')" type="button">Back
                 </button>
             </div>

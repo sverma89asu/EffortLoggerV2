@@ -1,18 +1,15 @@
 package tu14.controllers;
 
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 import tu14.MainApp;
 import tu14.api.Backend;
 import tu14.api.request.GetRequest;
 import tu14.api.tables.Tables;
+import tu14.services.EffortLogService;
 import tu14.user.RawUserData;
 
-import javax.swing.*;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
@@ -28,6 +25,7 @@ public class MainController {
         engine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             JSObject window = (JSObject) engine.executeScript("window");
             window.setMember("app", this);
+            window.setMember("service_EffortLog", new EffortLogService());
         });
     }
 
@@ -58,9 +56,7 @@ public class MainController {
 
                 return false;
             }).get();
-        } catch (InterruptedException e) {
-            return null;
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             return null;
         }
     }
