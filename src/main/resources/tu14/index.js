@@ -24,9 +24,9 @@ function to(_page) {
     pages.dispatchEvent(new CustomEvent("routing:" + _page));
 }
 
-function makeRequest(table) {
+function makeRequest(table, method = "GET") {
     return fetch("https://cse360.flerp.dev/tables/" + table, {
-        headers: {
+        method, headers: {
             Authorization: "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5"
         }
     });
@@ -59,7 +59,7 @@ function toast(string, type) {
         text: string,
         duration: 3000,
         gravity: "bottom",
-        position: "right",
+        position: "left",
         stopOnFocus: "true",
         style: {
             background: col, color: textCol
@@ -250,7 +250,6 @@ pages.addEventListener("routing:effort", async (event) => {
 });
 
 const defectTable = new Tabulator("#defect-table", {
-    height: "100%",
     data: {},
     layout: "fitColumns",
     columns: [{title: "ID", field: "id"}, {title: "Name", field: "name"}, {
@@ -268,14 +267,10 @@ const defectTable = new Tabulator("#defect-table", {
         editorParams: {valuesLookup: () => lifecycles.map((a) => ({label: a.name, value: a.id}))},
         formatter: (cell) => lifecycles.filter((a) => a.id === cell.getValue())[0].name
     }, {
-        title: "Life Cycle Excluded",
-        field: "lifeCycleExcluded",
-        editor: "list",
-        editorParams: {
+        title: "Life Cycle Excluded", field: "lifeCycleExcluded", editor: "list", editorParams: {
             clearable: true,
             valuesLookup: () => lifecycles.map((a) => ({label: a.name, value: a.id}))
-        },
-        formatter: (cell) => lifecycles.filter((a) => a.id === cell.getValue())[0]?.name ?? ""
+        }, formatter: (cell) => lifecycles.filter((a) => a.id === cell.getValue())[0]?.name ?? ""
     }, {
         title: "Defect Category", field: "defectCategory", editor: "list", editorParams: {
             valuesLookup: () => defectCategories.map(a => ({
@@ -309,6 +304,133 @@ pages.addEventListener("routing:defect", async (event) => {
     const json = await (await makeRequest("defectlog")).json();
     defectTable.setData(json);
 })
+
+const projectTable = new Tabulator("#project-table", {
+    data: {},
+    layout: "fitColumns",
+    columns: [{title: "ID", field: "id"}, {
+        title: "Name",
+        field: "name",
+        editor: "input"
+    }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
+});
+
+pages.addEventListener("routing:project", async (event) => {
+    event.stopImmediatePropagation();
+    const json = await (await makeRequest("project")).json();
+    projectTable.setData(json);
+});
+
+const lifeCycleTable = new Tabulator("#lifecycle-table", {
+    data: {},
+    layout: "fitColumns",
+    columns: [{title: "ID", field: "id"}, {
+        title: "Name",
+        field: "name",
+        editor: "input"
+    }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
+});
+
+pages.addEventListener("routing:lifecycle", async (event) => {
+    event.stopImmediatePropagation();
+    const json = await (await makeRequest("lifecycle")).json();
+    lifeCycleTable.setData(json);
+});
+
+const userStoriesTable = new Tabulator("#user-stories-table", {
+    data: {},
+    layout: "fitColumns",
+    columns: [{title: "ID", field: "id"}, {
+        title: "Name",
+        field: "name",
+        editor: "input"
+    }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
+});
+
+pages.addEventListener("routing:user-stories", async (event) => {
+    event.stopImmediatePropagation();
+    const json = await (await makeRequest("userstory")).json();
+    userStoriesTable.setData(json);
+});
+
+const deliverablesTable = new Tabulator("#deliverables-table", {
+    data: {},
+    layout: "fitColumns",
+    columns: [{title: "ID", field: "id"}, {
+        title: "Name",
+        field: "name",
+        editor: "input"
+    }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
+});
+
+pages.addEventListener("routing:deliverables", async (event) => {
+    event.stopImmediatePropagation();
+    const json = await (await makeRequest("deliverable")).json();
+    deliverablesTable.setData(json);
+});
+
+const effortCategoriesTable = new Tabulator("#effort-categories-table", {
+    data: {},
+    layout: "fitColumns",
+    columns: [{title: "ID", field: "id"}, {
+        title: "Name",
+        field: "name",
+        editor: "input"
+    }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
+});
+
+pages.addEventListener("routing:effort-categories", async (event) => {
+    event.stopImmediatePropagation();
+    const json = await (await makeRequest("effortcategory")).json();
+    effortCategoriesTable.setData(json);
+});
+
+const defectCategoriesTable = new Tabulator("#defect-categories-table", {
+    data: {},
+    layout: "fitColumns",
+    columns: [{title: "ID", field: "id"}, {
+        title: "Name",
+        field: "name",
+        editor: "input"
+    }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
+});
+
+pages.addEventListener("routing:defect-categories", async (event) => {
+    event.stopImmediatePropagation();
+    const json = await (await makeRequest("defectcategory")).json();
+    defectCategoriesTable.setData(json);
+});
+
+function saveGeneric(tableName) {
+    const table = {
+        project: projectTable,
+        userstory: userStoriesTable,
+        deliverable: deliverablesTable,
+        effortcategory: effortCategoriesTable,
+        defectcategory: defectCategoriesTable,
+        lifecycle: lifeCycleTable,
+    }[tableName];
+
+    let data = table.getEditedCells().map((cell) => cell.getRow().getData());
+
+    if (data.length === 0) {
+        toast("Nothing to save", "info");
+        return;
+    }
+
+    for (let {id, updatedAt, createdAt, ...rest} of data) {
+        fetch("https://cse360.flerp.dev/tables/" + tableName, {
+            method: "POST", headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5", "X-Data-ID": id.toString(),
+            }, body: JSON.stringify(rest)
+        });
+    }
+
+    toast("Saved changes", "success");
+
+
+}
 
 const effortLogProjectSelect = document.querySelector("#effort-select-project");
 const effortLogLifeCycleSelect = document.querySelector("#effort-select-lifecycle");
@@ -438,6 +560,33 @@ function doDefectLog() {
     } else {
         toast("Unknown Error", "error");
     }
+}
+
+const projectNameSelect = document.querySelector("#project-name");
+const projectDescriptionInput = document.querySelector("#project-description");
+
+async function createProject() {
+    const name = projectNameSelect.value;
+    const description = projectDescriptionInput.value;
+
+    if (name.trim() === "") {
+        toast("Invalid name", "error");
+        return;
+    }
+
+    const data = await fetch("https://cse360.flerp.dev/tables/project", {
+        method: "PUT", headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer dGVtcG9yYXJ5IGFsc29fdGVtcG9yYXJ5",
+        }, body: JSON.stringify({name, description})
+    });
+
+    if (data.ok) {
+        toast("Created project with ID " + (await data.json()).id, "success");
+    } else {
+        toast("Unknown Error", "error");
+    }
+
 }
 
 const planningPokerNumbers = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];

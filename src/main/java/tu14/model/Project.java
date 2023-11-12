@@ -9,22 +9,6 @@ public class Project implements IRawImplementer<Project> {
     public int id;
     public String name;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     private Project() {}
     public Project(int id, String name) {
         this.id = id;
@@ -38,10 +22,5 @@ public class Project implements IRawImplementer<Project> {
         this.id = data.get("id").asInt();
         this.name = data.get("name").asText();
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

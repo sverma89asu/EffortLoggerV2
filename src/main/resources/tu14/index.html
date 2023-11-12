@@ -246,7 +246,7 @@
                 </button>
                 <button
                         class="button-sky w-full"
-                        type="button" onclick="to('project')">Projects
+                        type="button" onclick="to('new-project')">Projects
                 </button>
             </div>
             <div class="flex flex-rows justify-end mt-4">
@@ -307,9 +307,36 @@
             <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
                         class="button-emerald w-48"
-                        type="button">
+                        type="button" onclick="saveGeneric('project')">
                     Save
                 </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('new-project')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row items-center justify-center" data-page="new-project">
+        <div>
+            <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
+                   id="project-name"
+                   placeholder="Project Name"
+                   type="text">
+            <textarea
+                    class="rounded-md bg-gray-100 border-gray-300 border min-h-24 w-full"
+                    placeholder="Description" id="project-description"></textarea>
+            <div class="flex flex-rows items-center gap-4">
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="createProject()">Create Project
+                </button>
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="to('project')">Project List
+                </button>
+            </div>
+            <div class="flex flex-rows justify-end mt-4">
                 <button
                         class="button-slate w-48"
                         onclick="to('project-console')" type="button">Back
@@ -324,7 +351,7 @@
             <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
                         class="button-emerald w-48"
-                        type="button">
+                        type="button" onclick="saveGeneric('userstory')">
                     Save
                 </button>
                 <button
@@ -341,7 +368,7 @@
             <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
                         class="button-emerald w-48"
-                        type="button">
+                        type="button" onclick="saveGeneric('deliverable')">
                     Save
                 </button>
                 <button
@@ -358,7 +385,7 @@
             <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
                         class="button-emerald w-48"
-                        type="button">
+                        type="button" onclick="saveGeneric('effortcategory')">
                     Save
                 </button>
                 <button
@@ -375,7 +402,24 @@
             <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
                 <button
                         class="button-emerald w-48"
-                        type="button">
+                        type="button" onclick="saveGeneric('defectcategory')">
+                    Save
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="lifecycle">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="lifecycle-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveGeneric('lifecycle')">
                     Save
                 </button>
                 <button
