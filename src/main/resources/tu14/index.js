@@ -1,30 +1,45 @@
 "use strict";
 
-let {render, signal, component} = reef;
-
-function PasswordField(placeholder) {
-
-
-    let data = signal({password: "", visible: false});
-
-    let events = {
+function PasswordField(props) {
+    return {
+        $template: "#passwordFieldTemplate",
+        visible: false,
+        id: props.name ?? "",
+        type: "password",
+        placeholder: props.placeholder,
         toggle() {
-            data.visible = !data.visible;
+            this.visible = !this.visible;
+            this.type = this.visible ? "text" : "password";
         }
     }
-
-    function template() {
-        let {password, visible} = data;
-
-        return `<div class="border-0 rounded-md p-0 m-0 bg-gray-100 flex flex-row items-stretch">
-                    <input class="rounded-l-md border-0 bg-inherit hover:bg-gray-200" type="${visible ? "text" : "password"}">
-                    <button class="text-2xl/6 rounded-r-md p-2 !outline-none hover:bg-gray-200">${visible ? "-" : "👁"}</button>
-                </div>`;
-    }
-
-    return {data, template, events}
 }
 
-let field = PasswordField();
+const pages = document.querySelector("#pages").children;
 
-component("#main", field.template, field.events );
+function to(_page) {
+    for (const page of pages) {
+        if (page.getAttribute("data-page") === _page)
+            page.classList.toggle("hidden", false);
+        else
+            page.classList.toggle("hidden", true);
+    }
+}
+
+to("effort-console");
+
+PetiteVue.createApp({PasswordField}).mount();
+
+document.querySelector("#login-button").addEventListener("click", () => {
+    const username = document.querySelector("#login-username").value;
+    const password = document.querySelector("#login-password").value;
+
+
+    const success = app.login(username, password);
+    if (success == null) {
+        app.log("Error occurred");
+    } else if (!success) {
+        app.log("Wrong credentials");
+    } else {
+        to("home");
+    }
+});

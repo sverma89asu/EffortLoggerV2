@@ -10,10 +10,177 @@
                 @apply font-sans;
             }
         }
+
+        @layer components {
+            div[data-page] {
+                @apply flex-1;
+            }
+        }
     </style>
+
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/32e87beb19.js"></script>
+    <script defer src="https://unpkg.com/petite-vue@0.2.2/dist/petite-vue.iife.js"></script>
+    <script defer src="index.js"></script>
 </head>
-<body style="height: 100%; margin: 0; padding: 0; " id="main">
+<body id="main" style="height: 100%; margin: 0; padding: 0; ">
+<template id="passwordFieldTemplate">
+    <div
+            class="border overflow-visible width-inherit rounded-md p-0 m-0 bg-gray-100 flex flex-row items-stretch border-gray-300">
+        <input :id="id"
+               :placeholder="placeholder"
+               :type="type"
+               class="rounded-l-md border-0 focus:border bg-inherit hover:bg-gray-200 flex-1">
+        <button @click="toggle"
+                class="rounded-r-md p-2 !outline-none hover:bg-gray-200 focus:bg-gray-200"
+                type="button">
+            <i
+                    :class="{'fa-eye': !visible, 'fa-eye-slash': visible}"
+                    class="fa-regular"></i>
+        </button>
+    </div>
+</template>
+
+<div class="w-full h-full flex flex-row items-stretch" id="pages">
+    <div class="visible flex flex-col items-center justify-center" data-page="login">
+        <h1 class="mb-2 font-semibold text-3xl">Effort Logger V2</h1>
+        <input class="rounded-md bg-gray-100 border-gray-300 border mb-2 w-1/2 max-w-2xl "
+               id="login-username"
+               placeholder="Username"
+               type="text">
+        <div class="w-1/2 max-w-2xl overflow-visible mb-2"
+             v-scope="PasswordField({placeholder: 'Password', name:'login-password'})"></div>
+        <button class="rounded-md w-1/2 border p-2 bg-sky-300 hover:bg-sky-200 focus:bg-sky-200 max-w-2xl"
+                id="login-button"
+                type="button">
+            Login
+        </button>
+    </div>
+    <div class="flex flex-col items-center justify-center"
+         data-page="home">
+        <div class=" grid grid-rows-5 gap-4 max-w-4xl">
+            <h1 class="mb-2 font-semibold text-3xl text-center">Effort Logger V2</h1>
+            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                    onclick="to('effort-console')" type="button">
+                Effort Logger
+            </button>
+            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                    onclick="to('defect-console')" type="button">
+                Defect Logger
+            </button>
+            <!--            <Button type="button">Project Definitions</Button>-->
+            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                    onclick="to('poker-console')" type="button">
+                Planning Poker
+            </button>
+            <button class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                    onclick="to('login')" type="button">
+                Log Out
+            </button>
+        </div>
+
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="effort-console">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="grid grid-rows-3 grid-cols-2 gap-4 max-w-4xl">
+                <button
+                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                        type="button">Start Activity
+                </button>
+                <button
+                        class="rounded-md border p-2 bg-blue-300 active:bg-blue-200 hover:bg-blue-200 !outline-none focus:ring-2 ring-inset ring-blue-500 w-96"
+                        type="button" onclick="to('effort')">View Logs
+                </button>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-project">
+                    <option disabled selected>Select Project</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-lifecycle">
+                    <option disabled selected>Select Life Cycle</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-category">
+                    <option disabled selected>Select Effort Category</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-deliverable">
+                    <option disabled selected>Select Deliverable</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-4 max-w-4xl mt-4">
+                <button
+                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 col-start-4"
+                        type="button" onclick="to('home')">Back
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="defect-console">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="grid grid-rows-4 grid-cols-2 gap-4 max-w-4xl">
+                <button
+                        class="rounded-md border p-2 bg-sky-300 active:bg-sky-200 hover:bg-sky-200 !outline-none focus:ring-2 ring-inset ring-sky-500 w-96"
+                        type="button">Edit Defect Log
+                </button>
+                <button
+                        class="rounded-md border p-2 bg-blue-300 active:bg-blue-200 hover:bg-blue-200 !outline-none focus:ring-2 ring-inset ring-blue-500 w-96"
+                        type="button" onclick="to('defect')">View Logs
+                </button>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="defect-select-project">
+                    <option disabled selected>Select Project</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="defect-select-lifecycle">
+                    <option disabled selected>Select Life Cycle</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="defect-select-category">
+                    <option disabled selected>Select Defect Category</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="defect-select-status">
+                    <option disabled selected>Select Status</option>
+                    <option value="true">Closed</option>
+                    <option value="false">Open</option>
+                </select>
+                <input class="rounded-md bg-gray-100 border-gray-300 border"
+                       id="defect-select-name"
+                       placeholder="Defect Name"
+                       type="text">
+                <input class="rounded-md bg-gray-100 border-gray-300 border"
+                       id="defect-select-fix"
+                       placeholder="Fix Description"
+                       type="text">
+            </div>
+            <div class="grid grid-cols-4 max-w-4xl mt-4">
+                <button
+                        class="rounded-md border p-2 bg-slate-300 active:bg-slate-200 hover:bg-slate-200 !outline-none focus:ring-2 ring-inset ring-slate-500 col-start-4"
+                        type="button" onclick="to('home')">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="poker-console"></div>
+    <div data-page="project-console"></div>
+    <div data-page="poker"></div>
+    <div data-page="effort"></div>
+    <div data-page="defect"></div>
+    <div data-page="project"></div>
+</div>
+
+
 </body>
-<script src="reef.js"></script>
-<script src="index.js"></script>
+
 </html>
