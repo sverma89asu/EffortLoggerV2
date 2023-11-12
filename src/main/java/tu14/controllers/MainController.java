@@ -14,6 +14,8 @@ import tu14.user.RawUserData;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
+import static javafx.concurrent.Worker.State.SUCCEEDED;
+
 public class MainController {
     public WebView webView;
 
@@ -26,10 +28,16 @@ public class MainController {
         WebEngine engine = webView.getEngine();
 
         engine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != SUCCEEDED) return;
+
+            System.out.println("Loaded page, loading services...");
+
             JSObject window = (JSObject) engine.executeScript("window");
             window.setMember("app", this);
             window.setMember("service_EffortLog", effortLogService);
             window.setMember("service_DefectLog", defectLogService);
+
+            System.out.println("Services loaded.");
         });
 
         engine.load(Objects.requireNonNull(MainApp.class.getResource("index.html")).toExternalForm());

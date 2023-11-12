@@ -26,7 +26,6 @@ public class DefectLogService {
 
     public DefectLogService() {
         Backend.getInstance().send(new GetRequest().table("defectLog"), DefectLog.class).thenAccept((raw) -> logs.addAll(raw.castSafe()));
-        System.out.println("B");
     }
 
     public boolean createDefectLog(String name, String description, int project,
