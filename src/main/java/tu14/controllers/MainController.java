@@ -17,8 +17,8 @@ import java.util.concurrent.ExecutionException;
 public class MainController {
     public WebView webView;
 
-    private EffortLogService effortLogService = new EffortLogService();
-    private DefectLogService defectLogService = new DefectLogService();
+    private final EffortLogService effortLogService = new EffortLogService();
+    private final DefectLogService defectLogService = new DefectLogService();
 
     public void initialize() {
         webView.setContextMenuEnabled(false);
