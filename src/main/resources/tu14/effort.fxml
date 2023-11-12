@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tu14.controllers.EffortController">
+    <StackPane prefHeight="200.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" maxWidth="1000" spacing="10.0">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+
+            <Label text="Effort Logger">
+                <font>
+                    <Font name="System Bold" size="18"/>
+                </font>
+            </Label>
+            <Pane/>
+            <Text fx:id="clockStatus"/>
+            <HBox>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+                <Button fx:id="startActivity" mnemonicParsing="false" text="Start Activity" prefWidth="200"
+                        onAction="#checkValidInputsAndSubmit"/>
+                <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
+                <Button mnemonicParsing="false" text="Planning Poker" prefWidth="200"
+                        disable="true"/>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+                <Label textFill="red" prefWidth="320" fx:id="activity_error_label"/>
+                <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+                <Label prefWidth="200" text="Project"/>
+                <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
+                <Label prefWidth="200" text="Life Cycle Step"/>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+                <ComboBox fx:id="project" prefWidth="200" />
+                <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
+                <ComboBox fx:id="lifecycle" prefWidth="200" />
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+                <Label prefWidth="200" text="Effort Category"/>
+                <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
+                <Label prefWidth="200" text="Deliverable"/>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+                <ComboBox fx:id="effort_category" prefWidth="200" />
+                <Pane opacity="0.0" HBox.hgrow="SOMETIMES" prefWidth="120"/>
+                <ComboBox fx:id="deliverable" prefWidth="200" />
+                <Pane opacity="0.0" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <Pane/>
+            <HBox spacing="10" alignment="CENTER">
+                <Button mnemonicParsing="false" text="Temporary Generate Logs" prefWidth="100"
+                        wrapText="true"
+                        textAlignment="CENTER" style="-fx-background-color: #ddaa99;"
+                        onAction="#generateLogs"/>
+                <Button mnemonicParsing="false" text="${'Edit\nEffort Log'}" prefWidth="100"
+                        wrapText="true"
+                        textAlignment="CENTER" onAction="#editLogs"/>
+                <Button mnemonicParsing="false" text="Defect Log Console" prefWidth="100"
+                        wrapText="true"
+                        textAlignment="CENTER" disable="true"/>
+                <Button mnemonicParsing="false" text="${'Project\nDefinitions'}" prefWidth="100"
+                        wrapText="true"
+                        textAlignment="CENTER" disable="true"/>
+                <Button mnemonicParsing="false" text="${'View\nLogs'}" prefWidth="100"
+                        wrapText="true"
+                        textAlignment="CENTER" onAction="#viewLogs"/>
+            </HBox>
+        </VBox>
+    </StackPane>
+    <!--      <VBox prefHeight="200.0" prefWidth="100.0"></VBox>-->
+</AnchorPane>
