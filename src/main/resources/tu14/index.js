@@ -568,7 +568,7 @@ async function createProject() {
 
 }
 
-const storyNameSelect = document.querySelector("#story-name");
+const storyNameSelect = document.querySelector("#story-name-select");
 const storyDescriptionInput = document.querySelector("#story-description");
 const storyProjectSelect = document.querySelector("#story-select-project");
 
