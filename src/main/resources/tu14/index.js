@@ -613,7 +613,7 @@ async function loadStory() {
 function joinSession() {
     if (service_PlanningPoker.joinSession(document.querySelector("#poker-session-code").value)) {
         to("poker-thing");
-        toast("Joined planning poker session " + service_PlanningPoker.sessionName);
+        toast("Joined planning poker session " + service_PlanningPoker.getSessionName());
 
         loadStory();
     } else {
