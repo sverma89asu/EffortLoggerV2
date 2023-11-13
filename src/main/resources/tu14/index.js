@@ -635,7 +635,7 @@ function createSession() {
 
     if (service_PlanningPoker.createSession(name, storyId)) {
         to("poker-thing");
-        toast("Create planning poker session " + service_PlanningPoker.sessionName);
+        toast("Create planning poker session " + service_PlanningPoker.getSessionName());
 
         loadStory();
     } else {
