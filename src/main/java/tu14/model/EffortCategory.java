@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import tu14.api.IRawImplementer;
 
+/**
+ * Author: Shikha Verma
+ * Date: 2023-11-10
+ * Description: This Java class will contain information of effort category
+ */
 public class EffortCategory implements IRawImplementer<EffortCategory> {
     @JsonIgnore
     public int id;

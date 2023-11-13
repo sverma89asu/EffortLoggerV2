@@ -3,7 +3,11 @@ package tu14.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import tu14.api.IRawImplementer;
-
+/**
+ * Author: Shikha Verma
+ * Date: 2023-11-10
+ * Description: This Java class will contain information of lifecycle
+ */
 public class LifeCycle implements IRawImplementer<LifeCycle> {
     @JsonIgnore
     public int id;
