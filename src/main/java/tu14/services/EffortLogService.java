@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Author: Shikha Verma
+ * Date: 2023-11-10
+ * Description: This Java class is responsible for managing the effort logs and communicating with the frontend and dataabse
+ */
 public class EffortLogService {
 
     private final List<EffortLog> logs = new ArrayList<>();
@@ -32,17 +37,19 @@ public class EffortLogService {
     public EffortLogService() {
         Backend.getInstance().send(new GetRequest().table("effortLog"), EffortLog.class).thenAccept((raw) -> logs.addAll(raw.castSafe()));
     }
-
+    //To start the clock when start activity is clicked
     public void startClock() {
         this.clockRunning = true;
         this.clockStartTime = Instant.now();
     }
 
+    //To stop the clock when stop activity is clicked
     private void stopClock() {
         this.clockRunning = false;
         this.clockEndTime = Instant.now();
     }
 
+    //To delete the log from the system
     public boolean deleteLog(int id) {
         try {
             Backend.getInstance().send(new DeleteRequest().table(Tables.EffortLog).id(id), null).get();
@@ -52,6 +59,7 @@ public class EffortLogService {
         }
     }
 
+    //adding new effort log into the system
     public boolean completeEffortLog(int lifeCycle, int effortCategory, int deliverable,
                                      int project) {
 
@@ -77,6 +85,7 @@ public class EffortLogService {
         }
     }
 
+    //To modify the exiting effort logs
     public boolean saveEffortLogs(JSObject editedLogs, int length) {
         for (int i = 0; i < length; i++) {
             JSObject jsLog = (JSObject) editedLogs.getSlot(i);
@@ -98,6 +107,7 @@ public class EffortLogService {
         return true;
     }
 
+    //To export effort log data into csv file
     public int exportEffortLogs() {
 
         if (logs.isEmpty()) return 1;

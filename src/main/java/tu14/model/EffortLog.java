@@ -8,6 +8,11 @@ import tu14.data.IExportableData;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * Author: Shikha Verma
+ * Date: 2023-11-10
+ * Description: This Java class will contain information of effort log instance
+ */
 public class EffortLog implements IRawImplementer<EffortLog>, IExportableData {
 
     // Not encapsulated because we aren't restricting the thing
@@ -69,11 +74,13 @@ public class EffortLog implements IRawImplementer<EffortLog>, IExportableData {
         return end;
     }
 
+    //To be used for export function
     @Override
     public String toCSVHeader() {
         return "id, start, end, life cycle, effort category, deliverable, project";
     }
 
+    //To be used for export function
     @Override
     public String toCSV() {
         return String.format("%d, %s, %s, %d, %d, %d, %d", id, start.toString(), end.toString(),
