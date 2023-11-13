@@ -598,7 +598,7 @@ async function createStory() {
 }
 
 async function loadStory() {
-    const id = service_PlanningPoker.storyId;
+    const id = service_PlanningPoker.getStoryId();
     const story = (await (await makeRequest("userstory")).json()).filter(a => a.id === id)[0];
 
     if (!story) {

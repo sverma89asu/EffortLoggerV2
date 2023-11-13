@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 public class PlanningPokerSessionService {
 
     private String sessionName;
-    public int storyId;
+    private int storyId;
     private int pokerId;
     public boolean inSession = false;
     public boolean ownsSession = false;
@@ -91,5 +91,13 @@ public class PlanningPokerSessionService {
 
     public void setSessionName(String sessionName) {
         this.sessionName = sessionName;
+    }
+
+    public int getStoryId() {
+        return storyId;
+    }
+
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
     }
 }
