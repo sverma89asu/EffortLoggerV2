@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Webview</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <style type="text/tailwindcss">
+        @layer base {
+            p {
+                @apply font-sans;
+            }
+        }
+
+        @layer components {
+            div[data-page] {
+                @apply flex-1;
+            }
+
+            button {
+                @apply rounded-md border p-2 !outline-none focus:ring-2 ring-inset
+            }
+
+            .button-slate {
+                @apply bg-slate-300 active:bg-slate-200 hover:bg-slate-200 ring-slate-500
+            }
+
+            .button-emerald {
+                @apply bg-emerald-300 active:bg-emerald-200 hover:bg-emerald-200 ring-emerald-500
+            }
+
+            .button-sky {
+                @apply bg-sky-300 active:bg-sky-200 hover:bg-sky-200 ring-sky-500
+            }
+        }
+    </style>
+
+    <script src=" https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js "></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/32e87beb19.js"></script>
+    <script defer src="https://unpkg.com/petite-vue@0.2.2/dist/petite-vue.iife.js"></script>
+
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css"
+          rel="stylesheet">
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_semanticui.min.css"
+          rel="stylesheet">
+    <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"
+            type="text/javascript"></script>
+    <script defer src="index.js"></script>
+</head>
+<body id="main" style="height: 100%; margin: 0; padding: 0; ">
+<template id="passwordFieldTemplate">
+    <div
+            class="border overflow-visible width-inherit rounded-md p-0 m-0 bg-gray-100 flex flex-row items-stretch border-gray-300">
+        <input :id="id"
+               :placeholder="placeholder"
+               :type="type"
+               class="rounded-l-md border-0 focus:border bg-inherit hover:bg-gray-200 flex-1">
+        <button @click="toggle"
+                class="rounded-r-md p-2 !outline-none hover:bg-gray-200 focus:bg-gray-200"
+                type="button">
+            <i
+                    :class="{'fa-eye': !visible, 'fa-eye-slash': visible}"
+                    class="fa-regular"></i>
+        </button>
+    </div>
+</template>
+
+<div class="w-full h-full flex flex-row items-stretch p-8" id="pages">
+    <div class="visible flex flex-col items-center justify-center" data-page="login">
+        <h1 class="mb-2 font-semibold text-3xl">Effort Logger V2</h1>
+        <input class="rounded-md bg-gray-100 border-gray-300 border mb-2 w-1/2 max-w-2xl "
+               id="login-username"
+               placeholder="Username"
+               type="text">
+        <div class="w-1/2 max-w-2xl overflow-visible mb-2"
+             v-scope="PasswordField({placeholder: 'Password', name:'login-password'})"></div>
+        <button class="rounded-md w-1/2 border p-2 bg-sky-300 hover:bg-sky-200 focus:bg-sky-200 max-w-2xl"
+                id="login-button"
+                type="button">
+            Login
+        </button>
+    </div>
+    <div class="flex flex-col items-center justify-center"
+         data-page="home">
+        <div class=" grid grid-rows-5 gap-4 max-w-4xl">
+            <h1 class="mb-2 font-semibold text-3xl text-center">Effort Logger V2</h1>
+            <button class="button-sky w-96"
+                    onclick="to('effort-console')" type="button">
+                Effort Logger
+            </button>
+            <button class="button-sky w-96"
+                    onclick="to('defect-console')" type="button">
+                Defect Logger
+            </button>
+            <button class="button-sky w-96"
+                    onclick="to('project-console')" type="button">Project Definitions</button>
+            <button class="button-sky w-96"
+                    onclick="to('poker-console')" type="button">
+                Planning Poker
+            </button>
+            <button
+                    class="button-slate w-96"
+                    onclick="to('login')" type="button">
+                Log Out
+            </button>
+        </div>
+
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="effort-console">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="grid grid-rows-3 grid-cols-2 gap-4 max-w-4xl">
+                <button
+                        class="button-sky w-96"
+                        onclick="doEffortLog(this)" type="button">Start Activity
+                </button>
+                <button
+                        class="bg-blue-300 active:bg-blue-200 hover:bg-blue-200 ring-blue-500 w-96"
+                        onclick="to('effort')" type="button">View Logs
+                </button>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-project">
+                    <option disabled selected>Select Project</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-lifecycle">
+                    <option disabled selected>Select Life Cycle</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-category">
+                    <option disabled selected>Select Effort Category</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="effort-select-deliverable">
+                    <option disabled selected>Select Deliverable</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-4 max-w-4xl mt-4">
+                <button
+                        class="button-slate col-start-4"
+                        onclick="to('home')" type="button">Back
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="defect-console">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="grid grid-rows-3 grid-cols-2 gap-4 max-w-4xl">
+                <button
+                        class="button-sky w-96"
+                        type="button" onclick="doDefectLog(this)">Create Defect Log
+                </button>
+                <button
+                        class="bg-blue-300 active:bg-blue-200 hover:bg-blue-200 ring-blue-500 w-96"
+                        onclick="to('defect')" type="button">View Logs
+                </button>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="defect-select-project">
+                    <option disabled selected>Select Project</option>
+
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="defect-select-lifecycle">
+                    <option disabled selected>Select Life Cycle</option>
+                </select>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="defect-select-category">
+                    <option disabled selected>Select Defect Category</option>
+                </select>
+                <input class="rounded-md bg-gray-100 border-gray-300 border"
+                       id="defect-select-name"
+                       placeholder="Defect Name"
+                       type="text">
+                <textarea
+                        class="rounded-md bg-gray-100 border-gray-300 border min-h-24 col-span-2"
+                placeholder="Description" id="defect-select-description"></textarea>
+            </div>
+            <div class="grid grid-cols-4 max-w-4xl mt-4">
+                <button
+                        class="button-slate col-start-4"
+                        onclick="to('home')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="poker-console">
+        <h1 class="mb-2 font-semibold text-3xl text-center mb-8">Effort Logger V2</h1>
+        <div class="flex flex-row items-center justify-around gap-12">
+            <div class="grid grid-rows-3 gap-4 items-stretch">
+                <input class="rounded-md bg-gray-100 border-gray-300 border w-full"
+                       id="poker-session-code"
+                       placeholder="Session Name"
+                       type="text">
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="joinSession()">Join Session
+                </button>
+            </div>
+
+            <div class="flex flex-col items-stretch">
+                <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
+                       id="poker-create-session-code"
+                       placeholder="Session Name"
+                       type="text">
+                <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
+                       id="poker-create-story-id"
+                       placeholder="User Story ID"
+                       type="number">
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="createSession()">Create Session
+                </button>
+            </div>
+        </div>
+        <div class="fixed bottom-4 right-4 flex flex-rows justify-end">
+            <button
+                    class="button-slate w-48"
+                    onclick="to('home')" type="button">Back
+            </button>
+        </div>
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="poker-thing">
+        <h1 class="mb-2 font-semibold text-3xl text-center mb-8">Effort Logger V2</h1>
+        <div class="grid grid-rows-1 grid-cols-2 gap-4 items-stretch">
+            <div class="flex flex-col justify-stretch gap-2">
+                <div class="font-semibold" id="story-name"></div>
+                <div id="story-content"></div>
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500" id="select-poker-points">
+                    <option selected disabled>Story Points</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="8">8</option>
+                    <option value="13">13</option>
+                    <option value="20">20</option>
+                    <option value="40">40</option>
+                    <option value="100">100</option>
+                </select>
+                <textarea
+                        class="rounded-md bg-gray-100 border-gray-300 border min-h-24 w-full"
+                        placeholder="Notes" id="poker-description"></textarea>
+                <button
+                        class="button-sky flex-1"
+                        type="button" onclick="progressPlanningPoker(this)">Submit Points
+                </button>
+            </div>
+
+            <div id="poker-feedback-container" class="row-span-5">
+
+            </div>
+        </div>
+        <div class="fixed bottom-4 right-4 flex flex-rows justify-end">
+            <button
+                    class="button-slate w-48"
+                    onclick="to('home'), rounds=0, pokerSubmitted=false" type="button">Back
+            </button>
+        </div>
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="project-console">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="grid grid-rows-3 grid-cols-2 gap-4 max-w-4xl">
+
+                <button
+                        class="button-sky w-96"
+                        type="button" onclick="to('effort-categories')">Effort Categories
+                </button>
+                <button
+                        class="button-sky w-96"
+                        type="button" onclick="to('defect-categories')">Defect Categories
+                </button>
+                <button
+                        class="button-sky w-96"
+                        type="button" onclick="to('lifecycle')">Life Cycle
+                </button>
+                <button
+                        class="button-sky w-96"
+                        type="button" onclick="to('deliverables')">Deliverables
+                </button>
+                <button
+                        class="button-sky w-96"
+                        type="button" onclick="to('new-story')">User Stories
+                </button>
+                <button
+                        class="button-sky w-full"
+                        type="button" onclick="to('new-project')">Projects
+                </button>
+            </div>
+            <div class="flex flex-rows justify-end mt-4">
+                <button
+                        class="button-slate w-48"
+                        onclick="to('home')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col items-center justify-center" data-page="poker"></div>
+    <div data-page="effort">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="effort-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                    type="button" onclick="saveEffort()">
+                    Save
+                </button>
+                <button class="button-sky w-48" type="button"
+                        onclick="exportEffort()">
+                    Export
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('effort-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="defect">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="defect-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveDefect()">
+                    Save
+                </button>
+                <button class="button-sky w-48" type="button"
+                        onclick="exportDefect()">
+                    Export
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('defect-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="project">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="project-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveGeneric('project')">
+                    Save
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('new-project')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row items-center justify-center" data-page="new-project">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <input class="rounded-md bg-gray-100 border-gray-300 border mb-4 w-full"
+                   id="project-name"
+                   placeholder="Project Name"
+                   type="text">
+            <textarea
+                    class="rounded-md bg-gray-100 border-gray-300 border min-h-24 w-full"
+                    placeholder="Description" id="project-description"></textarea>
+            <div class="flex flex-rows items-center gap-4">
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="createProject()">Create Project
+                </button>
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="to('project')">Project List
+                </button>
+            </div>
+            <div class="flex flex-rows justify-end mt-4">
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="user-stories">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="user-stories-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveGeneric('userstory')">
+                    Save
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('new-story')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="deliverables">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="deliverables-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveGeneric('deliverable')">
+                    Save
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="effort-categories">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="effort-categories-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveGeneric('effortcategory')">
+                    Save
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="defect-categories">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="defect-categories-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveGeneric('defectcategory')">
+                    Save
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-page="lifecycle">
+        <div class="flex flex-col justify-stretch">
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="flex-1" id="lifecycle-table"></div>
+            <div class="flex flex-rows justify-end m-4 gap-4 fixed bottom-0 right-0">
+                <button
+                        class="button-emerald w-48"
+                        type="button" onclick="saveGeneric('lifecycle')">
+                    Save
+                </button>
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row items-center justify-center" data-page="new-story">
+        <div>
+            <h1 class="mb-2 font-semibold text-3xl text-center mb-4">Effort Logger V2</h1>
+            <div class="grid w-full grid-cols-2 gap-4 mb-4">
+                <input class="rounded-md bg-gray-100 border-gray-300 border"
+                       id="story-name-select"
+                       placeholder="Title"
+                       type="text">
+                <select
+                        class="rounded-md border !outline-none focus:ring-2 ring-inset ring-sky-500"
+                        id="story-select-project">
+                    <option disabled selected>Select Project</option>
+                </select>
+                <!--TODO tags input -->
+            </div>
+            <textarea
+                    class="rounded-md bg-gray-100 border-gray-300 border min-h-36 w-full"
+                    placeholder="User Story" id="story-description"></textarea>
+            <div class="flex flex-rows items-center gap-4">
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="createStory()">Create User Story
+                </button>
+                <button
+                        class="button-sky w-96 flex-1"
+                        type="button" onclick="to('user-stories')">User Stories List
+                </button>
+            </div>
+            <div class="flex flex-rows justify-end mt-4">
+                <button
+                        class="button-slate w-48"
+                        onclick="to('project-console')" type="button">Back
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>
