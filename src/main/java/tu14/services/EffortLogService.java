@@ -52,7 +52,7 @@ public class EffortLogService {
     //To delete the log from the system
     public boolean deleteLog(int id) {
         try {
-            Backend.getInstance().send(new DeleteRequest().table(Tables.EffortLog).id(id), null).get();
+            Backend.getInstance().send(new DeleteRequest().table(Tables.EffortLogs).id(id), null).get();
             return true;
         } catch (InterruptedException | ExecutionException e) {
             return false;
@@ -75,7 +75,7 @@ public class EffortLogService {
 
         try {
             var data =
-                    Backend.getInstance().send(new CreateRequest().table(Tables.EffortLog).body(log), EffortLog.class).get();
+                    Backend.getInstance().send(new CreateRequest().table(Tables.EffortLogs).body(log), EffortLog.class).get();
 
             this.logs.addAll(data.castSafe());
 
@@ -98,7 +98,7 @@ public class EffortLogService {
             log.lifeCycle = (int) jsLog.getMember("lifeCycle");
 
             try {
-                Backend.getInstance().send(new UpdateRequest().table(Tables.EffortLog).id(log.getId()).body(log), null).get();
+                Backend.getInstance().send(new UpdateRequest().table(Tables.EffortLogs).id(log.getId()).body(log), null).get();
             } catch (InterruptedException | ExecutionException e) {
                 return false;
             }

@@ -82,7 +82,7 @@ public class Backend {
 
         CompletableFuture<HttpResponse<RawData<K>>> response = makeRequest(kClass);
 
-        // TODO make send return a union type that indicates type of error on non-successful completion
+        //noinspection SwitchStatementWithTooFewBranches
         return response.thenApplyAsync((resp) -> switch (resp.statusCode()) {
             case 200 -> resp.body();
             default -> {
