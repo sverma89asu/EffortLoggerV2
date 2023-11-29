@@ -1,7 +1,7 @@
 ## EffortLogger V2
 
 ### Description
-[All Tests](https://github.com/sverma89asu/EffortLoggerV2/actions/workflows/maven.yml/badge.svg)
+![All Tests](https://github.com/sverma89asu/EffortLoggerV2/actions/workflows/maven.yml/badge.svg)
 
 ### Installation
 - `git clone` This repository.
