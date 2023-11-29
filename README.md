@@ -1,9 +1,11 @@
-## EffortLogger V2
+# EffortLogger V2
 
-### Description
+## Description
 ![All Tests](https://github.com/sverma89asu/EffortLoggerV2/actions/workflows/maven.yml/badge.svg)
+Effort Logger Version 2, for CSE360 at ASU. Made on the vaguest of premises and least sensible of information.
+Capable of doing asynchronous planning poker, or of editing many values. 
 
-### Installation
+## Installation
 - `git clone` This repository.
 - If installed Java Version <17, install Java 17+ (see [adoptium.net](https://adoptium.net)).
 - [Optional] Install Maven (see [maven.apache.org](https://maven.apache.org/users/index.html))
@@ -11,25 +13,25 @@
 Am way too lazy to go through the hell of modularizing this, so there's no instructions for a 
 packaged install, lol.
 
-### Usage
+## Usage
 1. Navigate to project root (the directory with `pom.xml`).
 
 2.  
    - If Maven is installed on system: `mvn clean javafx:run`
    - If Maven **is not** installed on system: `./mvnw.cmd clean javafx:run`
 
-### Tests
+## Tests
 1. Navigate to project root (the directory with `pom.xml`).
 
 2.
    - If Maven is installed on system: `mvn test`
    - If Maven **is not** installed on system: `./mvnw.cmd test`
 
-#### Test Coverage
+### Test Coverage
 Automated End-to-end package tests cover the `tu14.api` package.
 In `tu14.api`, Tests cover 100% of classes, ~70% lines and methods.  
 
-### Requirements
+## Requirements
 - Java SE 17+ 
 - Maven or Maven Wrapper (included)
 - JavaFX Runtime 
@@ -48,7 +50,7 @@ In `tu14.api`, Tests cover 100% of classes, ~70% lines and methods.
 | Maven JavaFX Plugin   | 0.0.8    | org.openjfx:javafx-maven-plugin                        |
 | Maven Shade Plugin    | 3.0.0    | org.apache.maven.plugins:maven-shade-plugin            |
 
-### License
+## License
 You're kidding right? This is school work, lol. I guess, if you want it, see the LICENSE file
 
 
