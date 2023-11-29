@@ -7,9 +7,9 @@ Effort Logger Version 2, for CSE360 at ASU. Made on the vaguest of premises and 
 Capable of doing asynchronous planning poker, or of editing many values. 
 
 ## Installation
-- `git clone` This repository.
-- If installed Java Version <17, install Java 17+ (see [adoptium.net](https://adoptium.net)).
-- [Optional] Install Maven (see [maven.apache.org](https://maven.apache.org/users/index.html))
+1. `git clone` This repository.
+2. If installed Java Version <17, install Java 17+ (see [adoptium.net](https://adoptium.net)).
+3. [Optional] Install Maven (see [maven.apache.org](https://maven.apache.org/users/index.html))
 
 Am way too lazy to go through the hell of modularizing this, so there's no instructions for a 
 packaged install, lol.
