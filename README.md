@@ -11,12 +11,18 @@ Am way too lazy to go through the hell of modularizing this, so there's no instr
 packaged install, lol.
 
 ### Usage
-- If Maven is installed on system: `mvn clean javafx:run`
-- If Maven **is not** installed on system: `./mvnw.cmd clean javafx:run`
+1. Navigate to project root (the directory with `pom.xml`).
+
+2.  
+   - If Maven is installed on system: `mvn clean javafx:run`
+   - If Maven **is not** installed on system: `./mvnw.cmd clean javafx:run`
 
 ### Tests
-- If Maven is installed on system: `mvn test`
-- If Maven **is not** installed on system: `./mvnw.cmd test`
+1. Navigate to project root (the directory with `pom.xml`).
+
+2.
+   - If Maven is installed on system: `mvn test`
+   - If Maven **is not** installed on system: `./mvnw.cmd test`
 
 #### Test Coverage
 Automated End-to-end package tests cover the `tu14.api` package.
