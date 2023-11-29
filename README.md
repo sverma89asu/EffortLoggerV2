@@ -3,8 +3,7 @@
 ## Description
 ![All Tests](https://github.com/sverma89asu/EffortLoggerV2/actions/workflows/maven.yml/badge.svg)
 
-Effort Logger Version 2, for CSE360 at ASU. Made on the vaguest of premises and least sensible of information.
-Capable of doing asynchronous planning poker, or of editing many values. 
+Effort Logger Version 2, for CSE360 at ASU. Capable of doing asynchronous planning poker, or of editing many values. 
 
 ## Installation
 1. `git clone` This repository.
