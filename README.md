@@ -3,7 +3,7 @@
 ## Description
 ![All Tests](https://github.com/sverma89asu/EffortLoggerV2/actions/workflows/maven.yml/badge.svg)
 
-Effort Logger Version 2, for CSE360 at ASU. Capable of doing asynchronous planning poker, or of editing many values. 
+Effort Logger V2 is a versatile tool designed for collaborative software engineering projects. This iteration provides effort logging and editing capabilities, along with the inclusion of asynchronous Planning Poker for convenient project planning. The system also introduces robust defect logs, ensuring a comprehensive approach to project documentation and critical insights into project quality.
 
 ## Installation
 1. `git clone` This repository.
