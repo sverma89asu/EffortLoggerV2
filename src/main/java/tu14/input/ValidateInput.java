@@ -15,7 +15,7 @@ public class ValidateInput {
             formatDate.setLenient(false);
             Date date = formatDate.parse(userInput);
 
-            // Check if inputted date is in the future
+            // Check if the inputted date is in the future
             Date presentDate = new Date();
             return !date.after(presentDate);
         } catch (ParseException e) {
@@ -33,7 +33,7 @@ public class ValidateInput {
             formatTime.setLenient(false);
             Date time = formatTime.parse(userInput);
 
-            // Check if inputted time is in the future
+            // Check if the inputted time is in the future
             Date presentTime = new Date();
             return !time.after(presentTime);
         } catch (ParseException e) {
