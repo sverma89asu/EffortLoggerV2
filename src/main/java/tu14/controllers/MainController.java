@@ -10,7 +10,7 @@ import tu14.api.tables.Tables;
 import tu14.services.DefectLogService;
 import tu14.services.EffortLogService;
 import tu14.services.PlanningPokerSessionService;
-import tu14.user.RawUserData;
+import tu14.model.user.RawUserData;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;

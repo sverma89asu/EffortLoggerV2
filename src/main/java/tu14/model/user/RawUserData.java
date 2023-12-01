@@ -1,4 +1,4 @@
-package tu14.user;
+package tu14.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;

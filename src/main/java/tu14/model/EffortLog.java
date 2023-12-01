@@ -21,6 +21,7 @@ public class EffortLog implements IRawImplementer<EffortLog>, IExportableData {
     public int deliverable;
     public int project;
     private int id;
+    public int user = 0;
     private Instant start;
     private Instant end;
     private Duration duration; // NOTE: in milliseconds

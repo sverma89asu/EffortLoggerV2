@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tu14.user.UserData;
+import tu14.model.user.UserData;
 
 import java.util.Objects;
 

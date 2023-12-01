@@ -1,4 +1,4 @@
-package tu14.user;
+package tu14.model.user;
 
 /**
  * Author: Shikha Verma
