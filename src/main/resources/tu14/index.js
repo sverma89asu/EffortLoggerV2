@@ -334,7 +334,7 @@ pages.addEventListener("routing:lifecycle", async (event) => {
 const userStoriesTable = new Tabulator("#user-stories-table", {
     data: {}, layout: "fitColumns", columns: [{title: "ID", field: "id"}, {
         title: "Name", field: "name", editor: "input"
-    }, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
+    }, {title: "Story Points", field: "points", editor: "number", editorParams: {min: 0, max: 100}}, {title: "Description", field: 'description', editor: "textarea", formatter: "textarea"}]
 });
 
 pages.addEventListener("routing:user-stories", async (event) => {
