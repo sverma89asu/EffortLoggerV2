@@ -3,16 +3,12 @@
 ## Description
 ![All Tests](https://github.com/sverma89asu/EffortLoggerV2/actions/workflows/maven.yml/badge.svg)
 
-Effort Logger Version 2, for CSE360 at ASU. Made on the vaguest of premises and least sensible of information.
-Capable of doing asynchronous planning poker, or of editing many values. 
+Effort Logger V2 is a versatile tool designed for collaborative software engineering projects. This iteration provides effort logging and editing capabilities, along with the inclusion of asynchronous Planning Poker for convenient project planning. The system also introduces robust defect logs, ensuring a comprehensive approach to project documentation and critical insights into project quality.
 
 ## Installation
 1. `git clone` This repository.
 2. If installed Java Version <17, install Java 17+ (see [adoptium.net](https://adoptium.net)).
 3. [Optional] Install Maven (see [maven.apache.org](https://maven.apache.org/users/index.html))
-
-Am way too lazy to go through the hell of modularizing this, so there's no instructions for a 
-packaged install, lol.
 
 ## Usage
 1. Navigate to project root (the directory with `pom.xml`).
@@ -52,6 +48,6 @@ In `tu14.api`, Tests cover 100% of classes, ~70% lines and methods.
 | Maven Shade Plugin    | 3.0.0    | org.apache.maven.plugins:maven-shade-plugin            |
 
 ## License
-You're kidding right? This is school work, lol. I guess, if you want it, see the LICENSE file
+See LICENSE file
 
 
